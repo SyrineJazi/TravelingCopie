@@ -1,0 +1,34 @@
+{% include 'reusable/listCSS.html.twig' %}
+{% include 'reusable/headerButtons.html.twig' %}
+
+<br>
+<br>
+<br>
+
+{% if voyages is not defined or voyages is empty %}
+    <h3>Aucun voyage repertorié</h3>
+{% else %}
+    <table class="author-table">
+        <tr>
+            <td>Nom</td>
+            <td>Destination</td>
+            <td>Duree</td>
+            <td>Prix</td>
+            <td>Description</td>
+            <td>Role</td>
+        </tr>
+        {% for unit in voyages %}
+            <tr>
+                {#<td><a href="{{path('author-details', {'name':unit.name}) }}">{{ unit.name|upper }}</a></td>#}
+                <td>{{ unit.nom|upper }}</td>
+                <td>{{ unit.destination}}</td>
+                <td>{{ unit.duree }}</td>
+                <td>{{ unit.prix }}</td>
+                <td>{{ unit.description }}</td>
+                <td>{{ unit.role }}</td>
+                {#<td><img class="author-image" src="{{ asset('images/' ~ unit.image) }}" alt="Author Portrait" /></td>#}
+                <td><a href="{{ path('edit-voyage',{'id':unit.id}) }}"><strong>Edit</strong></a>&nbsp;&nbsp;<a href="{{ path('delete-voyage', {'id':unit.id}) }}"><strong>Delete</strong></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
