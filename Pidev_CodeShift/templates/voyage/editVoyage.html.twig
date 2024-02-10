@@ -1,3 +1,4 @@
+{#
 {% include 'reusable/formCSS.html.twig' %}
 {% include 'reusable/headerButtons.html.twig' %}
 
@@ -40,4 +41,85 @@
     </div>
 </div>
 {{ form_end(voyage_form) }}
+#}
+
+{% extends "admin/FormOne.html.twig" %}
+
+{% block pagecontent %}
+<div class="right_col" role="main">
+<div class="col-md-6 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Formulaire Voyage<small>Modifier un voyage</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <br />
+            {{ form_start(voyage_form) }}
+            <form class="form-horizontal form-label-left">
+                {#--------Labels input------------#}
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.identifiant, "Identifiant", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.identifiant, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                        </div>
+                </div>
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.nom, "Nom", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.nom, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                        </div>
+                </div>
+                <div class="form-group row ">
+
+                    {{ form_label(voyage_form.duree, "Duree", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.duree, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                        </div>
+                </div>
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.prix, "Prix", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.prix, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                        </div>
+                </div>
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.destination, "Destination", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.destination, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                        </div>
+                </div>
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.description, "Description", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.description, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                        </div>
+                </div>
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.role, "Role", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.role, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                        </div>
+                </div>
+
+                {#-------- Fin - Label input------------#}
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9  offset-md-3">
+                        <button type="submit" class="btn btn-success">Edit</button>
+                    </div>
+                </div>
+
+            </form>
+            {{ form_end(voyage_form) }}
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
 

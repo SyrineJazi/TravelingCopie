@@ -23,6 +23,18 @@ class VoyageController extends AbstractController
         ]);
     }
 
+    #[Route('/admin', name: 'admin')]
+    public function admin(): Response
+    {
+        return $this->render('admin/FormTemplates.html.twig');
+    }
+    #[Route('/tables', name: 'tables')]
+    public function projects(): Response
+    {
+        return $this->render('admin/tables.html.twig');
+    }
+
+
     #[Route('/add-voyage', name:'add-voyage')]
     public function add_voyage(ManagerRegistry $doctrine, Request $request){
         $voyage = new Voyage();
