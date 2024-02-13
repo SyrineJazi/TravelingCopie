@@ -4,13 +4,17 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Security\UserAuthenticator;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class UsersController extends AbstractController
 {
@@ -30,7 +34,7 @@ class UsersController extends AbstractController
             throw $this->createNotFoundException('Book not found.');
         }
     
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
@@ -46,7 +50,7 @@ class UsersController extends AbstractController
         ]);
     }
 
-    #[Route('/deleteuser/{id}', name: 'app_delete_user')]
+    #[Route('/admin/deleteuser/{id}', name: 'app_delete_user')]
 public function delete(int $id, UserRepository $repository): Response
 {
     $user = $repository->find($id);
@@ -59,6 +63,32 @@ public function delete(int $id, UserRepository $repository): Response
     }
 
     return $this->redirectToRoute('admin_users');
+}
+#[Route('/admin/adduser', name: 'app_add_user', methods: ['GET', 'POST'])]
+public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+{
+    $user = new User();
+    $form = $this->createForm(UserType::class, $user);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // encode the plain password
+        $user->setPassword(
+            $userPasswordHasher->hashPassword(
+                $user,
+                $form->get('plainPassword')->getData()
+            )
+        );
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_users');
+    }
+
+    return $this->render('admin/user/adduser.html.twig', [
+        'userForm' => $form->createView(),
+    ]);
 }
 
     

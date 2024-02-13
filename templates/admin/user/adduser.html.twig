@@ -1,0 +1,34 @@
+{% extends "admin.html.twig" %}
+
+
+{% block form %}
+    <h1>Add User</h1>
+
+    {{ form_errors(userForm) }}
+
+    {{ form_start(userForm) }}
+                    <fieldset class="mb-3">
+                        
+                        {{ form_row(userForm.name) }}
+                        {{ form_row(userForm.username) }}
+                        {{ form_row(userForm.email) }}
+                        {{ form_row(userForm.roles) }}
+                    </fieldset>
+                    {{ form_row(userForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                    
+                    
+
+                    <button  type="submit" class="btn btn-primary btn-lg my-3">Add User</button>
+                    <a href="{{ path('admin_users') }}" class="btn btn-secondary">back to users list</a>
+                    
+                {{ form_end(userForm) }}
+
+
+                
+{% endblock %}
+
+
+    
+

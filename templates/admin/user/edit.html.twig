@@ -3,7 +3,7 @@
 {% block title %}Edit{% endblock %}
 
 {% block form %}
-    <h1>Register</h1>
+    <h1>Edit User</h1>
 
     {{ form_errors(form) }}
 
@@ -13,11 +13,12 @@
                         {{ form_row(form.name) }}
                         {{ form_row(form.username) }}
                         {{ form_row(form.email) }}
+                        {{ form_row(form.roles) }}
                     </fieldset>
                     {{ form_row(form.plainPassword, {
                         label: 'Password'
                     }) }}
-                    {{ form_row(form.agreeTerms) }}
+                    
 
                     <button href="{{ path('admin_users') }}" type="submit" class="btn btn-primary btn-lg my-3">save chanegs</button>
                     <a href="{{ path('admin_users') }}" class="btn btn-secondary">back to users list</a>

@@ -52,10 +52,13 @@
 						<div class="profile_pic">
 							<img src="{{asset('admin/images/img.jpg')}}" alt="..." class="img-circle profile_img">
 						</div>
+						{% if app.user %}
 						<div class="profile_info">
 							<span>Welcome,</span>
-							<h2>John Doe</h2>
+							<h2>{{ app.user.userIdentifier }}</h2>
 						</div>
+	
+						{% endif %}
 					</div>
 					<!-- /menu profile quick info -->
 
@@ -76,7 +79,7 @@
 								<li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<li><a href="form.html">General Form</a></li>
-                                        <li><a href="form.html">Users Form</a></li>
+                                        <li><a href="{{path('app_add_user')}}">Users Form</a></li>
 										<li><a href="form_advanced.html">Advanced Components</a></li>
 										<li><a href="form_validation.html">Form Validation</a></li>
 										<li><a href="form_wizards.html">Form Wizard</a></li>
@@ -280,11 +283,13 @@
 			<!-- /top navigation -->
 {% endblock %}
 {% block pagecontent %}
+
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
+							{% block form %}
 							<h3>Form Elements</h3>
 						</div>
 
@@ -299,7 +304,7 @@
 							</div>
 						</div>
 					</div>
-					{% block form %}
+					
 					<div class="clearfix"></div>
 					<div class="row">
 						<div class="col-md-12 col-sm-12 ">
