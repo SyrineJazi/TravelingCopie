@@ -71,7 +71,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
+                        <a href="{{ path('app_home') }}" class="nav-item nav-link active">Home</a>
                         <a href="about.html" class="nav-item nav-link">Spots</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Trips</a>
@@ -90,7 +90,18 @@
                             </div>
                         </div>
                     </div>
+                    {% if app.user %}
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ app.user.userIdentifier }}</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{{ path('app_profil') }}" class="dropdown-item">Profil</a>
+                            <a href="{{ path('app_logout') }}" class="dropdown-item">Logout</a>
+                        </div>
+                    </div>
+                    
+                    {% else %}
                     <a href="login" class="btn btn-primary px-3 d-none d-lg-flex">Sign in</a>
+                    {% endif %}
                     
                 </div>
             </nav>
@@ -141,7 +152,7 @@
                     <div class="row">
                         <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
-                                <a href="">Home</a>
+                                <a href="{{ path('app_home') }}">Home</a>
                                 <a href="">Cookies</a>
                                 <a href="">Help</a>
                                 <a href="">FQAs</a>
