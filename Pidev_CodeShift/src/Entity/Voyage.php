@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\VoyageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VoyageRepository::class)]
 class Voyage
@@ -18,6 +19,7 @@ class Voyage
     private ?string $identifiant = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Le nom est obligatoire !")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
@@ -34,6 +36,16 @@ class Voyage
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $role = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date_debut = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date_fin = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image1 = null;
+
 
     public function getId(): ?int
     {
@@ -122,4 +134,42 @@ class Voyage
 
         return $this;
     }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->date_debut;
+    }
+
+    public function setDateDebut(?\DateTimeInterface $date_debut): static
+    {
+        $this->date_debut = $date_debut;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->date_fin;
+    }
+
+    public function setDateFin(?\DateTimeInterface $date_fin): static
+    {
+        $this->date_fin = $date_fin;
+
+        return $this;
+    }
+
+    public function getImage1(): ?string
+    {
+        return $this->image1;
+    }
+
+    public function setImage1(?string $image1): static
+    {
+        $this->image1 = $image1;
+
+        return $this;
+    }
+
+    
 }

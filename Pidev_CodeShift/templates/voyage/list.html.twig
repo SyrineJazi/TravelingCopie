@@ -100,8 +100,9 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                       
                         {% for unit in voyages %}
+                        <tr>
                           <td>#</td>
                           <td>{{ unit.identifiant }}</td>
                           <td>
@@ -128,9 +129,9 @@
                             <a href="{{ path('edit-voyage',{'id':unit.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                             <a href="{{ path('delete-voyage',{'id':unit.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
                           </td>
-                          
-                          {% endfor %}
                         </tr>
+                          {% endfor %}
+                        
                       </tbody>
                     </table>
                 {% endif %}

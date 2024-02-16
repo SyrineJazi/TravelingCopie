@@ -33,8 +33,6 @@ class VoyageController extends AbstractController
     {
         return $this->render('admin/tables.html.twig');
     }
-
-
     #[Route('/add-voyage', name:'add-voyage')]
     public function add_voyage(ManagerRegistry $doctrine, Request $request){
         $voyage = new Voyage();
@@ -43,7 +41,23 @@ class VoyageController extends AbstractController
         $form = $this->createForm(VoyageType::class, $voyage);
         $form-> handleRequest($request);
 
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
+                // Handle the image upload
+                $image = $form->get('image1')->getData();
+
+                if ($image) {
+                    $newFilename = uniqid().'.'.$image->guessExtension();
+
+                    // Move the file to the directory where you want to store it
+                    $image->move(
+                        $this->getParameter('kernel.project_dir').'/public/images',
+                        $newFilename
+                    );
+
+                    // Save the file path to the entity
+                    $voyage->setImage1($newFilename);
+                }
+
               $em->persist($voyage);
               $em->flush(); 
               return $this->redirectToRoute('list-voyage');
