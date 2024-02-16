@@ -1,0 +1,32 @@
+{% include 'reusable/listCSS.html.twig' %}
+{% include 'base.html.twig' %}
+{% block title %}Nouveau Commentaire{% endblock %}
+/*{% block body %}
+<br>
+<br>
+<br>
+
+{% if comments is not defined or comments is empty %}
+    <h3>Aucun commentaire trouvé</h3>
+{% else %}
+    <table class="author-table">
+        <tr>
+            <td>id</td>
+            <td>commentaire</td>
+        
+          
+        </tr>
+        {% for unit in comments %}
+            <tr>
+                {#<td><a href="{{path('author-details', {'name':unit.name}) }}">{{ unit.name|upper }}</a></td>#}
+                
+                <td>{{ unit.id}}</td>
+                <td>{{ unit.commentaire|upper }}</td>
+                
+                {#<td><img class="author-image" src="{{ asset('images/' ~ unit.image) }}" alt="Author Portrait" /></td>#}
+              
+              </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}*/

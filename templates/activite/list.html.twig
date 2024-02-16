@@ -1,0 +1,30 @@
+{% include 'reusable/listCSS.html.twig' %}
+{% include 'reusable/headerButtons.html.twig' %}
+
+<br>
+<br>
+<br>
+
+{% if activites is not defined or activites is empty %}
+    <h3>Aucune activité repertorié</h3>
+{% else %}
+    <table class="author-table">
+        <tr>
+            <td>Nom</td>
+            <td>Date</td>
+            <td>Type</td>
+            <td>Description</td>
+        </tr>
+        {% for unit in activites %}
+            <tr>
+                {#<td><a href="{{path('author-details', {'name':unit.name}) }}">{{ unit.name|upper }}</a></td>#}
+                <td>{{ unit.nom|upper }}</td>
+                <td>{{ unit.date|date('Y-m-d H:i:s') }}</td> {# Change the date format as per your requirement #}
+                <td>{{ unit.type}}</td>
+                <td>{{ unit.description }}</td>
+                {#<td><img class="author-image" src="{{ asset('images/' ~ unit.image) }}" alt="Author Portrait" /></td>#}
+                <td><a href="{{ path('edit-activite',{'id':unit.id}) }}"><strong>Edit</strong></a>&nbsp;&nbsp;<a href="{{ path('delete-activite', {'id':unit.id}) }}"><strong>Delete</strong></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

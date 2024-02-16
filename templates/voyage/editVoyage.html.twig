@@ -1,0 +1,43 @@
+{% include 'reusable/formCSS.html.twig' %}
+{% include 'reusable/headerButtons.html.twig' %}
+
+<br>
+<br>
+<br>
+
+{{ form_start(voyage_form) }}
+<div class="form-container">
+    <div class="form-group">
+        {{ form_label(voyage_form.identifiant, "Identifiant") }}
+        {{ form_widget(voyage_form.identifiant) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(voyage_form.nom, "Nom") }}
+        {{ form_widget(voyage_form.nom) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(voyage_form.duree, "Duree") }}
+        {{ form_widget(voyage_form.duree) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(voyage_form.prix, "Prix") }}
+        {{ form_widget(voyage_form.prix) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(voyage_form.destination, "Destination") }}
+        {{ form_widget(voyage_form.destination) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(voyage_form.description, "Description") }}
+        {{ form_widget(voyage_form.description) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(voyage_form.role, "Role") }}
+        {{ form_widget(voyage_form.role) }}
+    </div>
+    <div class="form-group">
+        <button type="submit" class="centered-button">Edit</button>
+    </div>
+</div>
+{{ form_end(voyage_form) }}
+

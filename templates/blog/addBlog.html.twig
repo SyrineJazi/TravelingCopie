@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout de Blog{% endblock %}
+
+{% block body %}
+    <h1>Ajout d'Article</h1>
+    <br>
+    <br>
+    <br>
+
+    {{ form_start(blog_form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="form-container">
+        <div class="form-group">
+            {{ form_label(blog_form.titre, "Titre") }}
+            {{ form_widget(blog_form.titre) }}
+            {% if blog_form.titre.vars.errors|length > 0 %}
+                <div class="error">
+                    {% for error in blog_form.titre.vars.errors %}
+                        <span>{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form_label(blog_form.content, "Contenu") }}
+            {{ form_widget(blog_form.content) }}
+            {% if blog_form.content.vars.errors|length > 0 %}
+                <div class="error">
+                    {% for error in blog_form.content.vars.errors %}
+                        <span>{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form_label(blog_form.imageb, "Image") }}
+            {{ form_widget(blog_form.imageb) }}
+            {% if blog_form.imageb.vars.errors|length > 0 %}
+                <div class="error">
+                    {% for error in blog_form.imageb.vars.errors %}
+                        <span>{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="centered-button">Submit</button>
+        </div>
+    </div>
+    {{ form_end(blog_form) }}
+{% endblock %}
