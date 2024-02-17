@@ -1,22 +1,67 @@
-{% include 'reusable/listCSS.html.twig' %}
-{% include 'base.html.twig' %}
-{% block title %}Nouveau Commentaire{% endblock %}
-/*{% block body %}
-<br>
-<br>
-<br>
+{% extends "admin/tables.html.twig" %}
 
-{% if comments is not defined or comments is empty %}
-    <h3>Aucun commentaire trouvé</h3>
-{% else %}
+
+{% block title %}Nouveau Commentaire{% endblock %}
+{% block pagecontent %}
+<!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Liste des commentaires</h3>
+              </div>
+                    <!--partie search-->
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+                   <!--end partie search-->
+
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>commentaires</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <p>Compilation de tous les commentaires entrés dans la base de données</p>
+
+                    <!-- start project list -->
+
+                     {% if comments is not defined or comments is empty %}
+                     <div style="background-color: #ffcccc; padding: 20px; border-radius: 10px;">
+                            <h3 style="font-weight: bold; color: #7C0A02;">Aucun voyage répertorié !</h3>
+                            </div>
+                     <h3>Aucun commentaire trouvé</h3>
+                     </div>
+                     {% else %}
     <table class="author-table">
-        <tr>
+        <thead>
+         <tr>
             <td>id</td>
             <td>commentaire</td>
         
           
-        </tr>
-        {% for unit in comments %}
+         </tr>
+        </thead>
+        <tbody>
+          {% for unit in comments %}
             <tr>
                 {#<td><a href="{{path('author-details', {'name':unit.name}) }}">{{ unit.name|upper }}</a></td>#}
                 
@@ -24,9 +69,17 @@
                 <td>{{ unit.commentaire|upper }}</td>
                 
                 {#<td><img class="author-image" src="{{ asset('images/' ~ unit.image) }}" alt="Author Portrait" /></td>#}
-              
-              </tr>
-        {% endfor %}
+               <td>
+                        
+                 <a href="{{ path('edit-comment', {'id': unit.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit</a>
+                 <a href="{{ path('delete-comment', {'id': unit.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Delete</a>
+                                {#<a href="{{ path('delete-comment', {'id': unit.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Delete</a>#}
+                     </td> 
+            </tr>
+          {% endfor %} 
+         </tbody>
     </table>
 {% endif %}
-{% endblock %}*/
+ <!-- end project list -->
+
+{% endblock %}

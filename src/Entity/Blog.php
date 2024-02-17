@@ -13,7 +13,7 @@ class Blog
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id_b = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:5)]
@@ -33,7 +33,7 @@ class Blog
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->id_b;
     }
 
     public function getTitre(): ?string

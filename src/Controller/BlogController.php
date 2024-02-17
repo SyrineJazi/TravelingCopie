@@ -111,4 +111,11 @@ class BlogController extends AbstractController
             'blog_form' => $form->createView(),
         ]);
     }
+    #[Route('/alist-blog', name:'alist-blog')]
+    public function alist_blog(BlogRepository $repo){
+        $list_blogs=$repo->findAll();
+      
+    
+        return $this->render('admin/Formblog.html.twig',['blogs'=>$list_blogs]);
+    }
 }

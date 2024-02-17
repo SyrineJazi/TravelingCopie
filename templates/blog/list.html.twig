@@ -1,34 +1,71 @@
-{% include 'reusable/listCSS.html.twig' %}
+{% extends 'admin/tables.html.twig' %}
 
 
-{% block body %}
-<br>
-<br>
-<br>
+{% block pagecontent %}
+<!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Liste des articles</h3>
+              </div>
+                    <!--partie search-->
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+                   <!--end partie search-->
 
-{% if blogs is not defined or blogs is empty %}
-    <h3>Aucun blog</h3>
-{% else %}
-    <table class="author-table">
-        <tr>
-            <td>TITRE</td>
-            <td>CONTENT</td>
-            <td>IMAGE</td>
-            <td>Date</td>
-            <td>Actions</td> {# Add a new column for actions #}
-        </tr>
-        {% for unit in blogs %}
-            <tr>
-                <td>{{ unit.TITRE|upper }}</td>
-                <td>{{ unit.CONTENT }}</td>
-                <td>{{ unit.IMAGEB }}</td>
-                <td>{{ unit.date|date('Y-m-d') }}</td> {# Assuming 'date' is the property for the date field #}
-                <td>
-                    <a href="{{ path('edit-blog', {'id': unit.id}) }}" class="edit-button">Edit</a>
-                    <a href="{{ path('delete-blog', {'id': unit.id}) }}" class="delete-button">Delete</a>
-                </td> {# Add buttons for Edit and Delete with appropriate links #}
-            </tr>
-        {% endfor %}
-    </table>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Articles du site </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <p>Compilation de tous les Articles entrés dans la base de données</p>
+
+                    <!-- start project list -->
+                     {% if blogs is not defined or blogs is empty %}
+                       <h3>Aucun blog</h3>
+                     {% else %}
+                         <table class="author-table">
+                          <tr>
+                              <td>TITRE</td>
+                              <td>CONTENT</td>
+                              <td>IMAGE</td>
+                              <td>Date</td>
+                              <td>Actions</td> {# Add a new column for actions #}
+                              </tr>
+                      {% for unit in blogs %}
+                         <tr>
+                              <td>{{ unit.TITRE|upper }}</td>
+                              <td>{{ unit.CONTENT }}</td>
+                              <td>{{ unit.IMAGEB }}</td>
+                              <td>{{ unit.date|date('Y-m-d') }}</td> {# Assuming 'date' is the property for the date field #}
+                                <td>
+                        
+                                 <a href="{{ path('edit-blog', {'id': unit.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>Edit</a>
+                                 <a href="{{ path('delete-blog', {'id': unit.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Delete</a>
+                              </td> {# Add buttons for Edit and Delete with appropriate links #}
+                          </tr>
+                       {% endfor %}
+                  </table>
 {% endif %}
 {% endblock %}

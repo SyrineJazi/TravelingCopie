@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comments;
+
 use App\Form\CommentsType;
 use App\Repository\CommentsRepository;
 use Egulias\EmailValidator\Parser\Comment;
@@ -21,7 +22,7 @@ class CommentsController extends AbstractController
             'controller_name' => 'CommentsController',
         ]);
     } #[Route('/list-comment', name:'list-comment')]
-    public function list_blog(CommentsRepository $repo){
+    public function list_comment(CommentsRepository $repo){
         $list_comments=$repo->findAll();
       
     
@@ -41,5 +42,45 @@ class CommentsController extends AbstractController
               return $this->redirectToRoute('list-comment');
         }
         return $this->render('Comments/addComments.html.twig',['comment_form'=>$form->createView()]);
+    }
+    #[Route('/edit-comment/{id}', name:'edit-comment')]
+    public function editComment(Request $request, int $id): Response
+    {   
+        $entityManager = $this->getDoctrine()->getManager();
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
+
+        if (!$comment) {
+            throw $this->createNotFoundException('comment introuvable');
+        }
+        $form = $this->createForm(CommentsType::class, $comment);
+            $form->handleRequest($request);
+
+        if ($comment->isSubmitted() && $comment->isValid()) {
+            $entityManager->flush();
+          
+
+            return $this->redirectToRoute('list_comments', );
+        }
+
+        return $this->render('comments/editcomment.html.twig', [ 'comment' => $comment,
+            'comments_form' => $form->createView(),
+        ]);
+    }
+    #[Route('/delete-comment/{id}', name: 'delete-comment')]
+    public function deleteBlog(int $id): Response
+    {
+         $entityManager = $this->getDoctrine()->getManager();
+         $comment= $entityManager->getRepository(Comment::class)->find($id);
+
+        if (!$comment) {
+            throw $this->createNotFoundException('commentaire introuvable');
+        }
+
+       
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        // Rediriger vers la liste des articles de blog ou une autre page appropriée
+        return $this->redirectToRoute('list-comment');
     }
 }
