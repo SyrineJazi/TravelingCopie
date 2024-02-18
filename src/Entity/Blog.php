@@ -28,8 +28,8 @@ class Blog
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\Url(message:"Le lien de l'image est invalide.")]
+    #[ORM\Column(length: 255, nullable: true)]
+    
     #[Assert\NotBlank(message:"Le lien de l'image ne peut pas être vide.")]
     private ?string $imageb = null;
 

@@ -30,36 +30,34 @@ class BlogController extends AbstractController
     
         return $this->render('blog/list.html.twig',['blogs'=>$list_blogs]);
     }
-    #[Route('/add-blog', name:'add-blog')]
-    public function add_blog( Request $request){
-        $blog = new Blog();
-        $form = $this->createForm(BlogType::class, $blog);
-        $form-> handleRequest($request);
 
-        if($form->isSubmitted()&& $form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-              $em->persist($blog);
-              $em->flush(); 
-              return $this->redirectToRoute('list-blog');
-        }
-        return $this->render('blog/addBlog.html.twig',['blog_form'=>$form->createView()]);
-    }
     #[Route('/add-blog', name: 'add-blog')]
     public function addBlog(Request $request): Response
     {
         $blog = new Blog();
+        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+           
+            $imagebFile = $form->get('imageb')->getData();
+            if ($imagebFile) {
+               //  $bannerFileName = md5(uniqid()) . '.' . $bannerFile->getClientOriginalName();
+                 $imagebFileName =$imagebFile->getClientOriginalName();
+
+                $imagebFile->move(
+                    $this->getParameter('uploaded_images_directory'), // Directory to store uploaded banner files
+                    $imagebFileName
+                );
+                $blog->setImageb($imagebFileName); // Set the file name to the banner property
+            }
+            
             $entityManager->persist($blog);
             $entityManager->flush();
-
             return $this->redirectToRoute('list-blog');
         }
-
+         
         return $this->render('blog/addBlog.html.twig', [
             'blog_form' => $form->createView(),
         ]);
@@ -99,6 +97,17 @@ class BlogController extends AbstractController
 
         // Traiter la soumission du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
+            $imagebFile = $form->get('imageb')->getData();
+            if ($imagebFile) {
+               //  $bannerFileName = md5(uniqid()) . '.' . $bannerFile->getClientOriginalName();
+                 $imagebFileName =$imagebFile->getClientOriginalName();
+
+                $imagebFile->move(
+                    $this->getParameter('uploaded_images_directory'), // Directory to store uploaded banner files
+                    $imagebFileName
+                );
+                $blog->setImageb($imagebFileName); // Set the file name to the banner property
+            }
             // Persister les changements dans la base de données
             $entityManager->flush();
 
@@ -116,6 +125,6 @@ class BlogController extends AbstractController
         $list_blogs=$repo->findAll();
       
     
-        return $this->render('admin/Formblog.html.twig',['blogs'=>$list_blogs]);
+        return $this->render('blog/aff.html.twig',['blogs'=>$list_blogs]);
     }
 }

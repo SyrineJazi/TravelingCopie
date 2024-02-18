@@ -20,11 +20,11 @@ class EditBlogFormType extends AbstractType
             ->add('content', TextType::class, [
                 'label' => 'Contenu',
             ])
-            ->add('imageb' , FileType::class, [
-                'label' => 'Image',
-                'mapped' => false, // Ne pas mapper ce champ avec l'entité Blog
-                'required' => false, // Ce champ n'est pas requis
-            ]);
+            ->add('imageb', FileType::class, [
+                'label' => 'imageb',
+                'data_class' => null,
+                'required' => false,
+             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

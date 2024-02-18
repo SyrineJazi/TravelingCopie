@@ -23,7 +23,11 @@ class BlogType extends AbstractType
                 'label' => 'Votre Champ', ]
             )
             ->add('content')
-            ->add('imageb'  );
+            ->add('imageb', FileType::class, [
+                'label' => 'imageb',
+                'data_class' => null,
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

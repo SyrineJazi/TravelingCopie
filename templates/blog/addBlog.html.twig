@@ -33,8 +33,8 @@
             {% endif %}
         </div>
         <div class="form-group">
-            {{ form_label(blog_form.imageb, "Image") }}
-            {{ form_widget(blog_form.imageb) }}
+            {{ form_label(blog_form.imageb, "imageb") }}
+            {{ form_widget(blog_form.imageb, {'attr': {'type': 'imageb'}}) }}
             {% if blog_form.imageb.vars.errors|length > 0 %}
                 <div class="error">
                     {% for error in blog_form.imageb.vars.errors %}
