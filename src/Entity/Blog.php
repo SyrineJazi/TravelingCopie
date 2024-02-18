@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\BlogRepository;
 use Doctrine\DBAL\Types\Types;
@@ -30,6 +32,14 @@ class Blog
     #[Assert\Url(message:"Le lien de l'image est invalide.")]
     #[Assert\NotBlank(message:"Le lien de l'image ne peut pas être vide.")]
     private ?string $imageb = null;
+
+    #[ORM\OneToMany(mappedBy: 'blog', targetEntity: Comments::class)]
+    private Collection $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,4 +93,28 @@ class Blog
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+   #  public function addComment(Comments $comment): static
+   # {
+      #  if (!$this->comments->contains($comment)) {
+        #    $this->comments->add($comment);
+        #    $comment->setBlo($this); }
+
+       # return $this;}
+
+   # public function removeComment(Comments $comment): static
+   # {if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+       #     if ($comment->getBlog() === $this) {
+        #        $comment->setBlog(null); } }
+
+       # return $this;}
 }

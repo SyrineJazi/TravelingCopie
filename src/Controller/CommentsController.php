@@ -6,12 +6,14 @@ use App\Entity\Comments;
 
 use App\Form\CommentsType;
 use App\Repository\CommentsRepository;
-use Egulias\EmailValidator\Parser\Comment;
+//use Egulias\EmailValidator\Parser\Comments;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 //use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\Repository;
+use Doctrine\Persistence\ManagerRegistry;
 
 class CommentsController extends AbstractController
 {
@@ -41,46 +43,53 @@ class CommentsController extends AbstractController
               $em->flush(); 
               return $this->redirectToRoute('list-comment');
         }
-        return $this->render('Comments/addComments.html.twig',['comment_form'=>$form->createView()]);
-    }
-    #[Route('/edit-comment/{id}', name:'edit-comment')]
-    public function editComment(Request $request, int $id): Response
-    {   
-        $entityManager = $this->getDoctrine()->getManager();
-        $comment = $entityManager->getRepository(Comment::class)->find($id);
-
-        if (!$comment) {
-            throw $this->createNotFoundException('comment introuvable');
-        }
-        $form = $this->createForm(CommentsType::class, $comment);
-            $form->handleRequest($request);
-
-        if ($comment->isSubmitted() && $comment->isValid()) {
-            $entityManager->flush();
-          
-
-            return $this->redirectToRoute('list_comments', );
-        }
-
-        return $this->render('comments/editcomment.html.twig', [ 'comment' => $comment,
-            'comments_form' => $form->createView(),
-        ]);
+        return $this->render('comments/addComments.html.twig',['comment_form'=>$form->createView()]);
     }
     #[Route('/delete-comment/{id}', name: 'delete-comment')]
-    public function deleteBlog(int $id): Response
+    public function deleteComment(int $id): Response
     {
-         $entityManager = $this->getDoctrine()->getManager();
-         $comment= $entityManager->getRepository(Comment::class)->find($id);
+        // Récupérer l'entité de l'article de blog depuis la base de données
+        $entityManager = $this->getDoctrine()->getManager();
+        $comment = $entityManager->getRepository(Comments::class)->find($id);
 
         if (!$comment) {
             throw $this->createNotFoundException('commentaire introuvable');
         }
 
-       
+        // Supprimer l'article de blog
         $entityManager->remove($comment);
         $entityManager->flush();
 
         // Rediriger vers la liste des articles de blog ou une autre page appropriée
         return $this->redirectToRoute('list-comment');
     }
-}
+    #[Route('/edit-comments/{id}', name: 'edit-comments')]
+    public function editComments(Request $request, int $id): Response
+    {
+        // Récupérer l'entité de l'article de blog depuis la base de données
+        $entityManager = $this->getDoctrine()->getManager();
+        $comments = $entityManager->getRepository(Comments::class)->find($id);
+
+        if (!$comments) {
+            throw $this->createNotFoundException('Article de blog introuvable');
+        }
+
+        // Créer le formulaire pour éditer l'article de blog
+        $form = $this->createForm(CommentsType::class, $comments);
+        $form->handleRequest($request);
+
+        // Traiter la soumission du formulaire
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Persister les changements dans la base de données
+            $entityManager->flush();
+
+            // Rediriger vers la liste des articles de blog ou une autre page appropriée
+            return $this->redirectToRoute('list-comment');
+        }
+
+        // Rendre le template du formulaire d'édition avec le formulaire
+        return $this->render('Comments/editComments.html.twig', [  'comments' => $comments,
+            'comment_form' => $form->createView(),
+        ]);
+    }
+    }

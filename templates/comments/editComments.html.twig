@@ -1,0 +1,34 @@
+{% extends 'admin/FormValidation.html.twig' %}
+
+
+{% block title %}Modification de commentaire {% endblock %}
+
+{% block body %}
+    <h1>Modification commentaire</h1>
+    <br>
+    <br>
+    <br>
+
+    {{ form_start(comment_form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="form-container">
+       
+        <div class="form-group">
+            {{ form_label(comment_form.commentaire, "commentaire") }}
+            {{ form_widget(comment_form.commentaire) }}
+            {% if comment_form.commentaire.vars.errors|length > 0 %}
+                <div class="error">
+                    {% for error in comment_form.commentaire.vars.errors %}
+                        <span>{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <button type="submit" class="centered-button">Modifier mon commentaire</button>
+        </div>
+    </div>
+    {{ form_end(comment_form) }}
+
+    <a href="{{ path('edit-comments', {'id': comments.id}) }}">Edit</a>
+{% endblock %}

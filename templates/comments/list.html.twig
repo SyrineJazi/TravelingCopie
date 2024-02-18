@@ -70,11 +70,9 @@
                 
                 {#<td><img class="author-image" src="{{ asset('images/' ~ unit.image) }}" alt="Author Portrait" /></td>#}
                <td>
-                        
-                 <a href="{{ path('edit-comment', {'id': unit.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit</a>
-                 <a href="{{ path('delete-comment', {'id': unit.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Delete</a>
-                                {#<a href="{{ path('delete-comment', {'id': unit.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Delete</a>#}
-                     </td> 
+                     <a href="{{ path('delete-comment', {'id': unit.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>Delete</a>
+                     <a href="{{ path('edit-comments', {'id': unit.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>Edit</a>           
+                 </td> 
             </tr>
           {% endfor %} 
          </tbody>
