@@ -1,0 +1,89 @@
+{% extends "Backend/FormOne.html.twig" %}
+
+{% block pagecontent %}
+    <div class="right_col" role="main">
+        <div class="col-md-6 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Modifier la réservation<small>Modification d'une réservation</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    {{ form_start(edit_form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    <form class="form-horizontal form-label-left">
+                        {#--------Labels input------------#}
+                        <div class="form-group row">
+                            {{ form_label(edit_form.nbrreservation, "Nombre de réservations", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                            <div class="col-md-9 col-sm-9">
+                                {{ form_widget(edit_form.nbrreservation, {'attr': {'class': 'form-control', 'placeholder': 'Nombre de réservations'}}) }}
+                                <div class="form-horizontal form-label-left">
+                                    {{ form_errors(edit_form.nbrreservation) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(edit_form.eventName, "Nom de l'événement", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                            <div class="col-md-9 col-sm-9">
+                                {{ form_widget(edit_form.eventName, {'attr': {'class': 'form-control', 'placeholder': 'Nom de l\'événement'}}) }}
+                                <div class="form-horizontal form-label-left">
+                                    {{ form_errors(edit_form.eventName) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(edit_form.prixE, "Prix", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                            <div class="col-md-9 col-sm-9">
+                                {{ form_widget(edit_form.prixE, {'attr': {'class': 'form-control', 'placeholder': 'Prix'}}) }}
+                                <div class="form-horizontal form-label-left">
+                                    {{ form_errors(edit_form.prixE) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(edit_form.modepaiement, "Mode de paiement", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                            <div class="col-md-9 col-sm-9">
+                                {{ form_widget(edit_form.modepaiement, {'attr': {'class': 'form-control'}}) }}
+                                <div class="form-horizontal form-label-left">
+                                    {{ form_errors(edit_form.modepaiement) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(edit_form.message, "Message", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                            <div class="col-md-9 col-sm-9">
+                                {{ form_widget(edit_form.message, {'attr': {'class': 'form-control', 'placeholder': 'Message'}}) }}
+                                <div class="form-horizontal form-label-left">
+                                    {{ form_errors(edit_form.message) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(edit_form.type, "Type", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                            <div class="col-md-9 col-sm-9">
+                                {{ form_widget(edit_form.type, {'attr': {'class': 'form-control'}}) }}
+                                <div class="form-horizontal form-label-left">
+                                    {{ form_errors(edit_form.type) }}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Autres champs de votre entité Reservation à ajouter ici -->
+
+                        {#-------- Fin - Label input------------#}
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-9 col-sm-9 offset-md-3">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                         {{ form_rest(edit_form) }}
+                        {{ form_end(edit_form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

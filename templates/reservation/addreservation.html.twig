@@ -1,0 +1,92 @@
+{% extends "Backend/FormOne.html.twig" %}
+
+{% block pagecontent %}
+
+<!-- jQuery UI CSS CDN -->
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
+<!-- jQuery UI JS CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<div class="right_col" role="main">
+    <div class="col-md-6 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Formulaire d'ajout reservation<small>Ajouter une reservation</small></h2>
+                <form class="form-horizontal form-label-left" novalidate>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                {{ form_start(reservation_form, {'attr': {'novalidate': 'novalidate'}}) }}
+                <div class="form-group row">
+        {{ form_label(reservation_form.eventName, "Nom evennement", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+        <div class="col-md-9 col-sm-9">
+            {{ form_widget(reservation_form.eventName, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de places'}}) }}
+            <div class="form-horizontal form-label-left">
+                {{ form_errors(reservation_form.eventName) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        {{ form_label(reservation_form.nbrreservation, "Nombre de places", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+        <div class="col-md-9 col-sm-9">
+            {{ form_widget(reservation_form.nbrreservation, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de places'}}) }}
+            <div class="form-horizontal form-label-left">
+                {{ form_errors(reservation_form.nbrreservation) }}
+            </div>
+        </div>
+    </div><div class="form-group row">
+        {{ form_label(reservation_form.prixE, "Prix", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+        <div class="col-md-9 col-sm-9">
+            {{ form_widget(reservation_form.prixE, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de places'}}) }}
+            <div class="form-horizontal form-label-left">
+                {{ form_errors(reservation_form.prixE) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        {{ form_label(reservation_form.prixE, "Type", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+        <div class="col-md-9 col-sm-9">
+            {{ form_widget(reservation_form.type, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-horizontal form-label-left">
+                {{ form_errors(reservation_form.type) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        {{ form_label(reservation_form.modepaiement, "Mode de paiement", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+        <div class="col-md-9 col-sm-9">
+            {{ form_widget(reservation_form.modepaiement, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-horizontal form-label-left">
+                {{ form_errors(reservation_form.modepaiement) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        {{ form_label(reservation_form.message, "Message", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+        <div class="col-md-9 col-sm-9">
+            {{ form_widget(reservation_form.message, {'attr': {'class': 'form-control', 'placeholder' : 'Votre message'}}) }}
+            <div class="form-horizontal form-label-left">
+                {{ form_errors(reservation_form.message) }}
+            </div>
+        </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group">
+        <div class="col-md-9 col-sm-9 offset-md-3">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+{{ form_end(reservation_form) }}
+</form>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

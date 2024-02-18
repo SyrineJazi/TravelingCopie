@@ -1,0 +1,50 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Hello VoyageController!{% endblock %}
+
+{% block body %}
+
+
+ <!-- Packages Start -->
+ <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Events</h6>
+                <h1>Let's discover the world</h1>
+            </div>
+   <div class="container">
+    <div class="row">
+        {% for event in events %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="package-item bg-white mb-2">
+                <div class="position-relative">
+                    <img class="img-fluid" src="{{ asset('uploads/'~ event.image_file ) }}" alt="">
+                    <div class="blog-date">
+                        <h6 class="font-weight-bold mb-n1">{{event.date|date('d') }}</h6>
+                        <small class="text-white text-uppercase">{{event.date|date('m')  }}</small>
+                    </div>
+                    <a class="btn btn-primary btn-book" href="{{ path('addReservation', { 'id': event.id }) }}">Book</a>
+                </div>
+                <div class="p-4">
+                    <div class="d-flex justify-content-between mb-3">
+                        <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>{{ event.destination }}</small>
+                        <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"> {{event.numberofdays}}</i></small>
+                        <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>{{ event.capacity }}</small>
+                    </div>
+                    <a class="h5 text-decoration-none" href=""{{ path('addReservation', { 'id': event.id }) }}">{{ event.description }}</a>
+                    <div class="border-top mt-4 pt-4">
+                        <div class="d-flex justify-content-between">
+                            
+                            <h5 class="m-0">{{ event.Prix }}DT</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+    <!-- Packages End -->
+{% endblock %}

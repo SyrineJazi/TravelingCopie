@@ -1,0 +1,100 @@
+{% extends "Backend/tables.html.twig" %}   
+{% block pagecontent %}
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Liste des Evennements</h3>
+              </div>
+                    <!--partie search-->
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+                   <!--end partie search-->
+
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Evennements</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+
+                    <!-- start project list -->
+            
+                        {% if events is not defined or events is empty %}
+                            <div style="background-color: #ffcccc; padding: 20px; border-radius: 10px;">
+                            <h3 style="font-weight: bold; color: #7C0A02;">Aucun Evennement  !</h3>
+                            </div>
+                        {% else %}
+                            {# Your existing Twig code here #}
+                        
+                        <table class="table table-striped projects">
+                            <thead>
+                        <tr>
+                           <th>Nom</th>
+                <th>Description</th>
+                <th>Destination</th>
+                 <th>Image</th>
+                <th>Capacité</th>
+               
+                <th>Réservé</th>
+                <th>Date</th>
+                <th>Nombre de jours</th>
+                <th>Prix</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                     {% for event in events %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.description }}</td>
+                    <td>{{ event.destination }}</td>
+                    <td> {% if event.image_file|length > 0 %}
+                                    <img src="{{ asset('uploads/'~ event.image_file ) }}" width="250" height="150">
+                                {% else %}
+                                    <img src="{{ asset('uploads/'~ "Not found.jpg" ) }}" width="250" height="150">
+                                {% endif %}</td>
+                    <td>{{ event.capacity }}</td>
+                    <td>{{ event.reserved }}</td>
+                    <td>{{ event.date|date('d/m/Y H:i') }}</td>
+                    <td>{{ event.numberofdays }}</td>
+                    <td>{{ event.prix }}</td>
+                    <td><a href="{{ path('edit-event',{'id':event.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Update </a>
+                            <a href="{{ path('delete-event',{'id':event.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                <a href="{{ path('addReservation',{'id': event.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Book</a></td>
+                      
+
+                        </tr>
+                         {% endfor %}
+                      </tbody>
+                    </table>
+                {% endif %}
+                    <!-- end project list -->
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "Backend/tables.html.twig" %}
+
+{% block pagecontent %}
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Liste des Réservations</h3>
+                </div>
+                <!-- partie search -->
+                <div class="title_right">
+                    <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end partie search -->
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Réservations</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <!-- start reservation list -->
+                            {% if reservations is not defined or reservations is empty %}
+                                <div style="background-color: #ffcccc; padding: 20px; border-radius: 10px;">
+                                    <h3 style="font-weight: bold; color: #7C0A02;">Aucune Réservation !</h3>
+                                </div>
+                            {% else %}
+                                <table class="table table-striped projects">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom de l'événement</th>
+                                            <th>Prix</th>
+                                            <th>Nombre de reservation</th>
+                                            <th>Mode de paiement</th>
+                                            <th>Message</th>
+                                            <th>Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for reservation in reservations %}
+                                            <tr>
+                                                <td>{{ reservation.eventName }}</td>
+                                                <td>{{ reservation.prixE }}</td>
+                                                <td>{{ reservation.nbrreservation }}</td>
+                                                <td>{{ reservation.modepaiement }}</td>
+                                                <td>{{ reservation.message }}</td>
+                                                <td>{{ reservation.type }}</td>
+                                                <td><a href="{{ path('edit-R',{'id':reservation.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Update </a>
+                            <a href="{{ path('delete-R',{'id':reservation.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                            <!-- end reservation list -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+{% endblock %}
