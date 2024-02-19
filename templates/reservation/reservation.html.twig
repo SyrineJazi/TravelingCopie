@@ -19,7 +19,7 @@
                 <div class="form-group row">
                     {{ form_label(reservation_form.eventName, "Nom événement", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
                     <div class="col-md-9 col-sm-9">
-                        {{ form_widget(reservation_form.eventName, {'attr': {'class': 'form-control', 'placeholder' : 'Nom de l\'événement'}}) }}
+                        {{ form_widget(reservation_form.eventName, {'attr': {'class': 'form-control',  'readonly': 'readonly'}}) }}
                         <div class="form-horizontal form-label-left">
                             {{ form_errors(reservation_form.eventName) }}
                         </div>
@@ -37,7 +37,7 @@
                 <div class="form-group row">
                     {{ form_label(reservation_form.prixE, "Prix", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
                     <div class="col-md-9 col-sm-9">
-                        {{ form_widget(reservation_form.prixE, {'attr': {'class': 'form-control', 'placeholder' : 'Prix'}}) }}
+                        {{ form_widget(reservation_form.prixE, {'attr': {'class': 'form-control',  'readonly': 'readonly'}}) }}
                         <div class="form-horizontal form-label-left">
                             {{ form_errors(reservation_form.prixE) }}
                         </div>
@@ -70,6 +70,10 @@
                         </div>
                     </div>
                 </div>
+                
+
+
+
                 <div class="ln_solid"></div>
                 <div class="form-group">
                     <div class="col-md-9 col-sm-9 offset-md-3">

@@ -32,9 +32,11 @@ class ReservationController extends AbstractController
         $reservation->setIdevent($event);
         $eventName = $event->getName();
         $eventPrice=$event->getPrix();
+        $eventCapacity=$event->getCapacity();
         $reservation->setPrixE($eventPrice);
         $reservation->setEventName($eventName);
 
+       
 
         $form = $this->createForm(ReservationType::class, $reservation);
 
@@ -42,9 +44,13 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() and $form->isValid()) {
-
-
-            $em = $this->getDoctrine()->getManager();
+                $em = $this->getDoctrine()->getManager();
+            $nbrPlacesReservees = $reservation->getNbrreservation();
+            $prixTotal=$nbrPlacesReservees * $eventPrice;
+            $nouvelleCapacite = $eventCapacity - $nbrPlacesReservees;
+            $event-> setCapacity($nouvelleCapacite);
+            $reservation->setPrixTotal($prixTotal);
+            $em->persist($event);
             $em->persist($reservation);
             $em->flush();
             return $this->redirectToRoute('list-reservation');
@@ -67,9 +73,12 @@ class ReservationController extends AbstractController
     #[Route('/delete_reservation{id}', name:'delete-R')]
     public function supprReservation($id)
     {
+
+        
         $em = $this->getDoctrine()->getManager();
         $reservation = $this->getDoctrine()->getRepository(Reservation::class)->find($id);
         $em->remove($reservation);
+      
         $em->flush();
         return $this->redirectToRoute('list-reservation');
 

@@ -35,6 +35,7 @@ class ReservationType extends AbstractType
                     'Normal' => 'normal',
                     'VIP' => 'vip',
                 ]])
+                
         ;
     }
 

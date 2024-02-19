@@ -40,6 +40,9 @@ class Reservation
     #[ORM\Column]
     private ?float $prixE = null;
 
+    #[ORM\Column]
+    private ?float $prixTotal = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +128,18 @@ class Reservation
     public function setPrixE(float $prixE): static
     {
         $this->prixE = $prixE;
+
+        return $this;
+    }
+
+    public function getPrixTotal(): ?float
+    {
+        return $this->prixTotal;
+    }
+
+    public function setPrixTotal(float $prixTotal): static
+    {
+        $this->prixTotal = $prixTotal;
 
         return $this;
     }
