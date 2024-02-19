@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ActiviteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ActiviteRepository::class)]
 class Activite
@@ -15,35 +16,26 @@ class Activite
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $identifiant = null;
-
-    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message:"Le nom est obligatoire !")]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\NotBlank(message:"Veuillez saisir une date !")]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank(message:"Veuillez Choisir un type !")]
     private ?string $type = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\ManyToOne(inversedBy: 'activites')]
+    private ?Voyage $voyage = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdentifiant(): ?string
-    {
-        return $this->identifiant;
-    }
-
-    public function setIdentifiant(string $identifiant): static
-    {
-        $this->identifiant = $identifiant;
-
-        return $this;
     }
 
     public function getNom(): ?string
@@ -90,6 +82,18 @@ class Activite
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getVoyage(): ?Voyage
+    {
+        return $this->voyage;
+    }
+
+    public function setVoyage(?Voyage $voyage): static
+    {
+        $this->voyage = $voyage;
 
         return $this;
     }

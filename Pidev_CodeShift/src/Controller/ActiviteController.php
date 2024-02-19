@@ -6,8 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Activite;
+use App\Entity\Voyage;
 use App\Form\ActiviteType;
 use App\Repository\ActiviteRepository;
+use App\Repository\VoyageRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +22,7 @@ class ActiviteController extends AbstractController
             'controller_name' => 'ActiviteController',
         ]);
     }
+
     #[Route('/add-activite', name:'add-activite')]
     public function add_activite(ManagerRegistry $doctrine, Request $request){
         $activite = new Activite();
@@ -28,7 +31,7 @@ class ActiviteController extends AbstractController
         $form = $this->createForm(ActiviteType::class, $activite);
         $form-> handleRequest($request);
 
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
               $em->persist($activite);
               $em->flush(); 
               return $this->redirectToRoute('list-activite');
@@ -44,7 +47,6 @@ class ActiviteController extends AbstractController
         */
         return $this->render('activite/list.html.twig',['activites'=>$list_activite]);
     }
-
     #[Route('/delete-activite/{id}',name:'delete-activite')]
     public function delete_activite($id,ManagerRegistry $doctrine){
 
@@ -68,7 +70,7 @@ class ActiviteController extends AbstractController
         $form = $this->createForm(ActiviteType::class, $activite);
         $form-> handleRequest($request);
 
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
               $em->persist($activite);
               $em->flush(); 
               return $this->redirectToRoute('list-activite');
@@ -76,6 +78,35 @@ class ActiviteController extends AbstractController
         return $this->render('activite/editActivite.html.twig',['activite_form'=>$form->createView()]);
     }
 
+    /* -------------------------Connecting the entities-------------------------------------------------------*/
+
+    #[Route('/add-activite/{id}', name:'add-activite-au-voyage')]
+    public function add_activite_au_voyage($id,ManagerRegistry $doctrine, Request $request){
+        $activite = new Activite();
+        $voyage_repo = $doctrine->getRepository(Voyage::class);
+        $em = $doctrine->getManager();
+
+        $voyage = $voyage_repo->find($id);
+
+        $form = $this->createForm(ActiviteType::class, $activite);
+        $form-> handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+              $em->persist($activite);
+              $voyage->addActivite($activite);
+              $voyageID = $voyage->getId();
+              $em->flush(); 
+              return $this->redirectToRoute('voyage-details',['id'=>$voyageID]);
+        }
+        return $this->render('activite/addActivite.html.twig',['activite_form'=>$form->createView()]);
+    }
+
+    #[Route('/list-activite/{id}', name:'list-activite-voyage')]
+    public function list_activite_voyage($id,VoyageRepository $repo){
+        $voyage = $repo->find($id);
+        $list_activites = $voyage->getActivites();
+        return $this->render('voyage/voyageDetails.html.twig',['activites'=>$list_activites]);
+    }
 
 
 

@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\VoyageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: VoyageRepository::class)]
 class Voyage
@@ -15,27 +18,25 @@ class Voyage
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 30)]
-    private ?string $identifiant = null;
-
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Le nom est obligatoire !")]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
-    private ?int $duree = null;
-
     #[ORM\Column]
+    #[Assert\NotBlank(message:"Le prix est obligatoire !")]
+    #[Assert\Positive(message:"Le prix doit être positif !")]
     private ?int $prix = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message:"Veuillez choisir une destination")]
     private ?string $destination = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $role = null;
+    #[Assert\NotBlank(message:"Veuillez choisir le type !")]
+    private ?string $type = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_debut = null;
@@ -44,26 +45,39 @@ class Voyage
     private ?\DateTimeInterface $date_fin = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message:"Veuillez inserer une image !")]
     private ?string $image1 = null;
+
+    #[ORM\OneToMany(mappedBy: 'voyage', targetEntity: Activite::class)]
+    private Collection $activites;
+
+    /**
+     * @Assert\Callback
+     */
+    public function validateDateRange(ExecutionContextInterface $context)
+    {
+        // Ensure both dates are set before comparing
+        if ($this->date_debut !== null && $this->date_fin !== null) {
+            // Compare the dates
+            if ($this->date_fin < $this->date_debut) {
+                // Add a violation if date_fin is before date_debut
+                $context->buildViolation('La date de fin doit être postérieure à la date de début.')
+                    ->atPath('date_fin')
+                    ->addViolation();
+            }
+        }
+    }
+
+    public function __construct()
+    {
+        $this->activites = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
-    public function getIdentifiant(): ?string
-    {
-        return $this->identifiant;
-    }
-
-    public function setIdentifiant(string $identifiant): static
-    {
-        $this->identifiant = $identifiant;
-
-        return $this;
-    }
-
     public function getNom(): ?string
     {
         return $this->nom;
@@ -75,18 +89,6 @@ class Voyage
 
         return $this;
     }
-
-    public function getDuree(): ?int{
-        return $this->duree;
-    }
-
-    public function setDuree(int $duree): static
-    {
-        $this->duree = $duree;
-
-        return $this;
-    }
-
     public function getPrix(): ?int
     {
         return $this->prix;
@@ -123,14 +125,14 @@ class Voyage
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getType(): ?string
     {
-        return $this->role;
+        return $this->type;
     }
 
-    public function setRole(?string $role): static
+    public function setType(?string $type): static
     {
-        $this->role = $role;
+        $this->type = $type;
 
         return $this;
     }
@@ -167,6 +169,36 @@ class Voyage
     public function setImage1(?string $image1): static
     {
         $this->image1 = $image1;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Activite>
+     */
+    public function getActivites(): Collection
+    {
+        return $this->activites;
+    }
+
+    public function addActivite(Activite $activite): static
+    {
+        if (!$this->activites->contains($activite)) {
+            $this->activites->add($activite);
+            $activite->setVoyage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivite(Activite $activite): static
+    {
+        if ($this->activites->removeElement($activite)) {
+            // set the owning side to null (unless already changed)
+            if ($activite->getVoyage() === $this) {
+                $activite->setVoyage(null);
+            }
+        }
 
         return $this;
     }

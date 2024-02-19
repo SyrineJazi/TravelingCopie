@@ -90,8 +90,7 @@
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th style="width: 13%">Identifiant</th>
-                          <th>Nom</th>
+                          <th style="width: 13%">Nom</th>
                           <th>Date</th>
                           <th>Type</th>
                           <th style="width: 25%">Action</th>
@@ -101,7 +100,6 @@
                       {% for unit in activites %}
                         <tr>
                           <td>#</td>
-                          <td>{{ unit.identifiant }}</td>
                           <td>{{ unit.nom|upper }}</td>
                           <td>{{ unit.date|date('d-m-Y') }}</td>
                           <td>{{ unit.type }}</td>

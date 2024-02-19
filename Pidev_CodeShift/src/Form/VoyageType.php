@@ -15,9 +15,7 @@ class VoyageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('identifiant')
             ->add('nom')
-            ->add('duree')
             ->add('prix')
             ->add('destination', ChoiceType::class, [
                 'choices' => [
@@ -73,7 +71,14 @@ class VoyageType extends AbstractType
                 ],
             ])
             ->add('description')
-            ->add('role')
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                  'Voyage Touristique'  => 'Voyage Touristique',
+                  'Voyage Humanitaire'  => 'Voyage Humanitaire',
+                ],
+                'expanded' => true, // radio buttons
+                'multiple' => false, // Only one option
+            ])
             ->add('date_debut', DateType::class, [
                 'widget' => 'single_text',
                 // Add any additional options you need here

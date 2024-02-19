@@ -1,41 +1,3 @@
-{#
-{% include 'reusable/listCSS.html.twig' %}
-{% include 'reusable/headerButtons.html.twig' %}
-
-<br>
-<br>
-<br>
-
-{% if voyages is not defined or voyages is empty %}
-    <h3>Aucun voyage repertorié</h3>
-{% else %}
-    <table class="author-table">
-        <tr>
-            <td>Nom</td>
-            <td>Destination</td>
-            <td>Duree</td>
-            <td>Prix</td>
-            <td>Description</td>
-            <td>Role</td>
-        </tr>
-        {% for unit in voyages %}
-            <tr>
-                {#<td><a href="{{path('author-details', {'name':unit.name}) }}">{{ unit.name|upper }}</a></td>#}
-                {#
-                <td>{{ unit.nom|upper }}</td>
-                <td>{{ unit.destination}}</td>
-                <td>{{ unit.duree }}</td>
-                <td>{{ unit.prix }}</td>
-                <td>{{ unit.description }}</td>
-                <td>{{ unit.role }}</td>
-                {#<td><img class="author-image" src="{{ asset('images/' ~ unit.image) }}" alt="Author Portrait" /></td>#}
-                {#
-                <td><a href="{{ path('edit-voyage',{'id':unit.id}) }}"><strong>Edit</strong></a>&nbsp;&nbsp;<a href="{{ path('delete-voyage', {'id':unit.id}) }}"><strong>Delete</strong></a></td>
-            </tr>
-        {% endfor %}
-    </table>
-{% endif %}#}
-
 {% extends "admin/tables.html.twig" %}
 
 {% block pagecontent %}
@@ -91,12 +53,11 @@
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th style="width: 13%">Identifiant</th>
-                          <th>Nom</th>
+                          <th style="width: 20%">Nom</th>
                           <th>Destination</th>
-                          <th>Prix</th>
-                          <th>Role</th>
-                          <th style="width: 25%">Action</th>
+                          <th style="width: 3%">Prix</th>
+                          <th>Type</th>
+                          <th style="width: 35%">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -104,15 +65,15 @@
                         {% for unit in voyages %}
                         <tr>
                           <td>#</td>
-                          <td>{{ unit.identifiant }}</td>
                           <td>
-                            <a>{{ unit.nom|upper }}</a>
+                            <a><strong>{{ unit.nom|upper }}</strong></a>
                             <br />
-                            <small>{{ unit.duree }} jours</small>
+                            du <small>{{ unit.getDateDebut()|date('d-m-Y') }}</small>
+                            au <small>{{ unit.getDateFin()|date('d-m-Y') }}</small>
                           </td>
                           <td>{{ unit.destination}}</td>
                           <td>{{ unit.prix }}</td>
-                          <td>{{ unit.role }}</td>
+                          <td>{{ unit.type }}</td>
                           {#
                           <td class="project_progress">
                             <div class="progress progress_sm">
@@ -125,9 +86,9 @@
                           </td>
                           #}
                           <td>
-                            {#<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>#}
                             <a href="{{ path('edit-voyage',{'id':unit.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                             <a href="{{ path('delete-voyage',{'id':unit.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                            <a href="{{ path('voyage-details',{'id':unit.id}) }}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
                           </td>
                         </tr>
                           {% endfor %}
