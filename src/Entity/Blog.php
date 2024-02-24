@@ -15,7 +15,7 @@ class Blog
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id_b = null;
+    private ?int $id= null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:5)]
@@ -43,7 +43,7 @@ class Blog
 
     public function getId(): ?int
     {
-        return $this->id_b;
+        return $this->id;
     }
 
     public function getTitre(): ?string
@@ -92,6 +92,10 @@ class Blog
         $this->imageb = $imageb;
 
         return $this;
+    }
+    public function __toString(): string
+    {
+        return $this->titre; // Renvoie le titre du blog
     }
 
     /**

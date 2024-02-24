@@ -2,6 +2,7 @@
 
 
 {% block pagecontent %}
+
 <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
@@ -47,6 +48,7 @@
                      {% else %}
                          <table class="author-table">
                           <tr>
+                              <td>ID</td>
                               <td>TITRE</td>
                               <td>CONTENT</td>
                               <td>IMAGE</td>
@@ -55,6 +57,7 @@
                               </tr>
                       {% for unit in blogs %}
                          <tr>
+                              <td>{{ unit.id }}</td>
                               <td>{{ unit.TITRE|upper }}</td>
                               <td>{{ unit.CONTENT }}</td>
                               <td>{{ unit.IMAGEB }}</td>
