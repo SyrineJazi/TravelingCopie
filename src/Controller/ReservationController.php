@@ -9,6 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Email;
+use Mediumart\Orange\SMS\SMS;
+use Mediumart\Orange\SMS\Http\SMSClient;
+use Symfony\Component\Mailer\MailerInterface;
 
 class ReservationController extends AbstractController
 {
@@ -22,7 +26,7 @@ class ReservationController extends AbstractController
    
  #[Route("/addReservation{id}", name:"addReservation")]
    
-    public function ajouterReservation(Request $request, $id)
+    public function ajouterReservation(Request $request, $id, MailerInterface $mailer)
     {
 
 
@@ -53,7 +57,19 @@ class ReservationController extends AbstractController
             $em->persist($event);
             $em->persist($reservation);
             $em->flush();
-            return $this->redirectToRoute('list-reservation');
+           
+            $email = (new Email())
+            ->from('Majdoub.Syrine@esprit.tn')
+            ->to('Majdoub.syrine@esprit.tn')
+        
+            ->subject('Confirmation de Reservation')
+            ->html("<p>bonjour,". $reservation->getEventName()."</p><p> Votre reservation est confirmee </p>");
+
+
+        $mailer->send($email);
+            
+            return $this->redirectToRoute('event');
+
         }
         return $this->render('reservation/reservation.html.twig', array('reservation_form' => $form->createView()));
 

@@ -20,7 +20,14 @@ class EventRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Event::class);
     }
-
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('p')
+             ->orderBy('p.id', 'ASC')
+             ->getQuery()
+ 
+         ;
+    }
 //    /**
 //     * @return Event[] Returns an array of Event objects
 //     */

@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Knp\Component\Pager\PaginatorInterface;
 
 class EventController extends AbstractController
 {
@@ -78,12 +79,19 @@ class EventController extends AbstractController
     }
     #[Route('/event_', name:'event')]
     
-    public function listE(): Response
+    public function listE(PaginatorInterface $paginator,Request $request): Response
     {
-
+        
         $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
+        $query = $this->getDoctrine()->getRepository(Event::class)->createQueryBuilder('p');
+        $pagination = $paginator->paginate
+        (
+            $query->getQuery(),
+            $request->query->getInt('page', 1), // Numéro de page actuel, 1 par défaut
+            1 // Nombre d'éléments par page
+        );
 
-        return $this->render('event/event.html.twig', [
+        return $this->render('event/event.html.twig', ['pagination' => $pagination,
             'events' => $events, // Update variable name to plural for clarity
         ]);
         
