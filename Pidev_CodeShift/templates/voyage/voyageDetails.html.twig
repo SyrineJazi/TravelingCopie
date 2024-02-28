@@ -249,8 +249,7 @@
                       <!-- this row will not appear when printing -->
                       <div class="row no-print">
                         <div class="col-md-2">
-                          
-                          <button class="btn btn-primary pull-right" style="margin-right: 5px;" onclick="window.print();"><i class="fa fa-download" ></i> Generate PDF</button>
+                          <a href="{{ path('generate-pdf-voyage',{'id':voyage.id}) }}" class="btn btn-primary btn-xs"><i class=" fa fa-file-pdf-o"></i> PDF </a>
                         </div>
                       </div>
                     </section>
