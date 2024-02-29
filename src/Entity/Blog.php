@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use App\Entity\Comm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -33,12 +34,12 @@ class Blog
     #[Assert\NotBlank(message:"Le lien de l'image ne peut pas être vide.")]
     private ?string $imageb = null;
 
-    #[ORM\OneToMany(mappedBy: 'blog', targetEntity: Comments::class)]
-    private Collection $comments;
+    #[ORM\OneToMany(mappedBy: 'blog', targetEntity: Comm::class)]
+    private Collection $comms;
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
+        $this->comms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,11 +100,11 @@ class Blog
     }
 
     /**
-     * @return Collection<int, Comments>
+     * @return Collection<int, Comms>
      */
-    public function getComments(): Collection
+    public function getComms(): Collection
     {
-        return $this->comments;
+        return $this->comms;
     }
 
    #  public function addComment(Comments $comment): static
