@@ -88,11 +88,29 @@
                         </div>
                     </div>
                     <div class="form-group row ">
-                        {{ form_label(event_form.date, "Date", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        {{ form_label(event_form.date, "Date debut", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
                         <div class="col-md-9 col-sm-9">
                             {{ form_widget(event_form.date, {'attr': {'class': 'date-picker form-control', 'placeholder':'jj/mm/aaaa','onfocus': 'this.type=\'date\'', 'onmouseover': 'this.type=\'date\'', 'onclick': 'this.type=\'date\'', 'onblur': 'this.type=\'text\'', 'onmouseout': 'timeFunctionLong(this)'}}) }}
                              <div class="form-horizontal form-label-left">
                              {{ form_errors(event_form.date)}}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        {{ form_label(event_form.end, "Date fin", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(event_form.end, {'attr': {'class': 'date-picker form-control', 'placeholder':'jj/mm/aaaa','onfocus': 'this.type=\'date\'', 'onmouseover': 'this.type=\'date\'', 'onclick': 'this.type=\'date\'', 'onblur': 'this.type=\'text\'', 'onmouseout': 'timeFunctionLong(this)'}}) }}
+                             <div class="form-horizontal form-label-left">
+                             {{ form_errors(event_form.end)}}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        {{ form_label(event_form.all_day, "All Day", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(event_form.all_day, {'attr': {'class': 'date-picker form-control', 'placeholder':'jj/mm/aaaa','onfocus': 'this.type=\'date\'', 'onmouseover': 'this.type=\'date\'', 'onclick': 'this.type=\'date\'', 'onblur': 'this.type=\'text\'', 'onmouseout': 'timeFunctionLong(this)'}}) }}
+                             <div class="form-horizontal form-label-left">
+                             {{ form_errors(event_form.all_day)}}
                         </div>
                         </div>
                     </div>
@@ -102,6 +120,33 @@
                             {{ form_widget(event_form.numberofdays, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de jours de l\'événement'}}) }}
                              <div class="form-horizontal form-label-left">
                              {{ form_errors(event_form.numberofdays)}}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        {{ form_label(event_form.background_color, "background_color", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(event_form.background_color, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de jours de l\'événement'}}) }}
+                             <div class="form-horizontal form-label-left">
+                             {{ form_errors(event_form.background_color)}}
+                        </div>
+                        </div>
+                    </div>
+                     <div class="form-group row ">
+                        {{ form_label(event_form.border_color, "border color", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(event_form.border_color, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de jours de l\'événement'}}) }}
+                             <div class="form-horizontal form-label-left">
+                             {{ form_errors(event_form.border_color)}}
+                        </div>
+                        </div>
+                    </div>
+                     <div class="form-group row ">
+                        {{ form_label(event_form.text_color, "text_color", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(event_form.text_color, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de jours de l\'événement'}}) }}
+                             <div class="form-horizontal form-label-left">
+                             {{ form_errors(event_form.text_color)}}
                         </div>
                         </div>
                     </div>

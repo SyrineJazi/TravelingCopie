@@ -8,6 +8,7 @@ use App\Form\EventType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ActiviteRepository;
+use App\Repository\EventRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,14 +18,14 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class EventController extends AbstractController
 {
-    #[Route('/event', name: 'app_event')]
+    #[Route('/ev', name: 'app_event')]
     public function index(): Response
     {
-        return $this->render('Event/event.html.twig', [
+        return $this->render('Event/index.html.twig', [
             'controller_name' => 'EventController',
         ]);
     }
-
+   
     #[Route('/addevent', name: 'addevent')]
     public function addEvent(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -158,4 +159,34 @@ class EventController extends AbstractController
  
          return $this->redirectToRoute('list-event');
      }
+     #[Route('/', name: 'app_main')]
+     public function calendrier(EventRepository $calendar): Response
+     {
+         $events=$calendar->findAll();
+         $rdvs = [];
+ 
+         foreach($events as $event){
+             $rdvs[] = [
+                 'id' => $event->getId(),
+                 'title' => $event->getName(),
+                 'description' => $event->getDescription(),
+                 'capacity' => $event->getCapacity(),
+                 'reserved' => $event->getReserved(),
+                 'start' => $event->getDate()->format('Y-m-d H:i:s'),
+                 'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+                 'allDay' => $event->isAllDay(),
+                 'numberofdays' => $event->getNumberofdays(),
+                 'prix' => $event->getPrix(),
+                 'destination' => $event->getDestination(),
+                 'image_file' => $event->getimage_file(),
+                 'backgroundColor' => $event->getBackgroundColor(),
+                 'borderColor' => $event->getBorderColor(),
+                 'textColor' => $event->getTextColor(),
+             ];
+         }
+ 
+         $data = json_encode($rdvs);
+         return $this->render('main/index.html.twig',  compact('data'));
+     }
+ 
 }

@@ -99,6 +99,24 @@
                         </div>
                     </div>
                     <div class="form-group row ">
+                        {{ form_label(edit_form.end, "Date fin", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(edit_form.end, {'attr': {'class': 'date-picker form-control', 'placeholder':'jj/mm/aaaa','onfocus': 'this.type=\'date\'', 'onmouseover': 'this.type=\'date\'', 'onclick': 'this.type=\'date\'', 'onblur': 'this.type=\'text\'', 'onmouseout': 'timeFunctionLong(this)'}}) }}
+                         <div class="form-horizontal form-label-left">
+                             {{ form_errors(edit_form.end)}}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        {{ form_label(edit_form.all_day, "All Day", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(edit_form.all_day, {'attr': {'class': 'date-picker form-control', 'placeholder':'jj/mm/aaaa','onfocus': 'this.type=\'date\'', 'onmouseover': 'this.type=\'date\'', 'onclick': 'this.type=\'date\'', 'onblur': 'this.type=\'text\'', 'onmouseout': 'timeFunctionLong(this)'}}) }}
+                         <div class="form-horizontal form-label-left">
+                             {{ form_errors(edit_form.all_day)}}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
                         {{ form_label(edit_form.numberofdays, "Nombre de jours", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
                         <div class="col-md-9 col-sm-9">
                             {{ form_widget(edit_form.numberofdays, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de jours de l\'événement'}}) }}
@@ -107,7 +125,33 @@
                         </div>
                         </div>
                     </div>
-                
+                <div class="form-group row ">
+                        {{ form_label(edit_form.background_color, "background_color", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(edit_form.background_color, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de jours de l\'événement'}}) }}
+                             <div class="form-horizontal form-label-left">
+                             {{ form_errors(edit_form.background_color)}}
+                        </div>
+                        </div>
+                    </div>
+                     <div class="form-group row ">
+                        {{ form_label(edit_form.border_color, "border color", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(eedit_form.border_color, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de jours de l\'événement'}}) }}
+                             <div class="form-horizontal form-label-left">
+                             {{ form_errors(edit_form.border_color)}}
+                        </div>
+                        </div>
+                    </div>
+                     <div class="form-group row ">
+                        {{ form_label(edit_form.text_color, "text_color", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(edit_form.text_color, {'attr': {'class': 'form-control', 'placeholder' : 'Nombre de jours de l\'événement'}}) }}
+                             <div class="form-horizontal form-label-left">
+                             {{ form_errors(edit_form.text_color)}}
+                        </div>
+                        </div>
+                    </div>
                     <!-- Autres champs de votre entité Event à ajouter ici -->
 
                     {#-------- Fin - Label input------------#}
