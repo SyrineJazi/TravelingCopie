@@ -25,20 +25,37 @@ class RegistrationFormType extends AbstractType
             'attr' => [
                 'class' => 'form-control'
             ],
-            'label' => 'E-mail'
+            
+            
+            'label' => 'E-mail',
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Please enter your phone email',
+                ]),
+            ],
         ])
         ->add('name', TypeTextType::class, [
             'attr' => [
                 'class' => 'form-control'
             ],
-            'label' => 'Name'
+            'label' => 'Name',
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Please enter your phone name',
+                ]),
+            ],
         ])
 
         ->add('username', TypeTextType::class, [
             'attr' => [
                 'class' => 'form-control'
             ],
-            'label' => 'username'
+            'label' => 'username',
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Please enter your phone username',
+                ]),
+            ],
         ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

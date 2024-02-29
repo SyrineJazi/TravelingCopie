@@ -86,7 +86,7 @@ public function register(Request $request, UserPasswordHasherInterface $userPass
         return $this->redirectToRoute('admin_users');
     }
 
-    return $this->render('admin/user/adduser.html.twig', [
+    return $this->render('admin/user/add_user.html.twig', [
         'userForm' => $form->createView(),
     ]);
 }

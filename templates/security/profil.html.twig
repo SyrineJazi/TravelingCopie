@@ -12,8 +12,9 @@
         <p><strong>Email:</strong> {{ user.email }}</p>
     </div>
 
-    <!-- You can add more sections or details about the user as needed -->
-
-    <!-- Add your JavaScript or other scripts if necessary -->
+    <td>
+        
+        <a href="{{ path('app_edit', {'id': user.id}) }}">Modifier</a>
+    </td>
 
     {% endblock %}
