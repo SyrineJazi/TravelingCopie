@@ -1,0 +1,25 @@
+{# templates/spot/new.html.twig #}
+
+{% extends 'admin/media_gallery.html.twig' %}
+
+{% block title %}Ajouter spot{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="mt-5">Ajouter un spot</h2>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {{ form_start(form, {'attr': {'class': 'mt-3'}}) }}
+
+                {# Remove the id field row #}
+                {{ form_row(form.nom, {'attr': {'class': 'form-control mb-3'}}) }}
+                {{ form_row(form.localisation, {'attr': {'class': 'form-control mb-3'}}) }}
+                {{ form_row(form.description, {'attr': {'class': 'form-control mb-3'}}) }}
+                
+                {{ form_row(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

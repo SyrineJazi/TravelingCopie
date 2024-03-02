@@ -1,0 +1,16 @@
+// avisController.php
+
+/**
+ * @Route("/avis/delete/{id}", name="delete_avis")
+ * Method({"DELETE"})
+ */
+public function delete(Request $request, $id)
+{
+    $avis = $this->getDoctrine()->getRepository(avis::class)->find($id);
+
+    $entityManager = $this->getDoctrine()->getManager();
+    $entityManager->remove($avis);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('app_avis');
+}

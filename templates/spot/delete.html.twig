@@ -1,0 +1,16 @@
+// SpotController.php
+
+/**
+ * @Route("/spot/delete/{id}", name="delete_spot")
+ * Method({"DELETE"})
+ */
+public function delete(Request $request, $id)
+{
+    $spot = $this->getDoctrine()->getRepository(Spot::class)->find($id);
+
+    $entityManager = $this->getDoctrine()->getManager();
+    $entityManager->remove($spot);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('app_spot');
+}
