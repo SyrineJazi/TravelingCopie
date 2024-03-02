@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+{% block body %}
+ <!-- Packages Start -->
+
+    <style>
+        .img-cadre {
+            width: 350px; /* Adjust the width as needed */
+            height: 220px; /* Adjust the height as needed */
+            object-fit: cover; /* Maintain aspect ratio and cover entire container */
+        }
+        
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pagination span {
+        margin: 0 5px;
+        font-size: 1.4rem;
+    }
+
+    .pagination a {
+        text-decoration: none;
+        color: var(--primary);
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+        background-color: var(--greyLight);
+    }
+
+    .pagination .current {
+        background-color: var(--primary);
+        color: #fff;
+        padding: 0.5rem;
+        border-radius: 4px;
+    }
+    </style>
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-3 pb-3">
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Catalogue</h6>
+                <h1>Nos voyages</h1>
+            </div>
+            {#-----------------ONE ELEMENT-------------------#}
+            <div class="row">
+                {% for unit in pagination %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="package-item bg-white mb-2">
+                        <img class="img-cadre" src="{{ asset('images/' ~ unit.image1) }}" alt="">
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>&nbsp;{{unit.destination}}</small>
+                                <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>&nbsp;&nbsp;{{unit.getDateDebut()|date('d-m-Y')}}</small>
+                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>&nbsp;{{unit.type}}</small>
+                            </div>
+                            <a class="h5 text-decoration-none" href="{{ path('voyage-details-front',{'id':unit.id}) }}">{{unit.nom}}</a>
+                            <div class="border-top mt-4 pt-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                    <h5 class="m-0">{{unit.prix}}&nbsp;DT</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="pagination"> <!-- Add pagination class here -->
+                     {{knp_pagination_render(pagination)}}
+                </div>
+            {#-----------------ONE ELEMENT-------------------#}
+            </div>
+        </div>
+    </div>
+    <!-- Packages End -->
+     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+{% endblock %}

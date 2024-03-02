@@ -1,0 +1,266 @@
+
+
+{#
+<style>
+.author-image {
+    width: 100px; /* Adjust the width as needed */
+    height: 100px; /* Adjust the height as needed */
+}
+.author-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .author-table, .author-table th, .author-table td {
+        border: 1px solid #000;
+        text-align: center;
+    }
+
+    .author-table th, .author-table td {
+        padding: 10px;
+    }
+</style>
+
+{% include 'reusable/headerButtons.html.twig' %}
+
+<br>
+<br>
+<br>
+
+<table border="1" style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="text-align:center;"><strong>Image</strong></td>
+        <td style="text-align:center;"><strong>INFORMATION</strong></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; text-align: center; vertical-align: middle;">
+            <img class="author-image" src="{{ asset('images/' ~ voyage.image1) }}" alt="image1" style="max-width: 200px;" />
+        </td>
+        <td style="border: 1px solid #000; padding: 10px;">
+            <p><strong>{{ voyage.nom|upper }}</strong></p>
+            <p>Destination: {{ voyage.destination }}</p>
+            <p>Date de départ: {{ voyage.getDateDebut()|date('d-m-Y') }}</p>
+            <p>Date de fin: {{ voyage.getDateFin()|date('d-m-Y')}}</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;"><strong>Description</strong></td>
+        <td style="border: 1px solid #000; padding: 10px;">{{ voyage.getDescription() }}</td>
+    </tr>
+    
+</table>
+
+
+
+<h1><strong>List des activités</strong></h1>
+
+
+{% if voyage.activites is not defined or voyage.activites is empty %}
+    <h3>Aucune activité répertorié</h3>
+    <a href="{{ path('add-activite-au-voyage', {'id':voyage.id}) }}"><strong>Add</strong></a></td>
+{% else %}
+    <table class="author-table">
+        <tr>
+            <td>Nom</td>
+            <td>Date</td>
+            <td>Type</td>
+            <td>Description</td>
+        </tr>
+        {% for unit in voyage.activites %}
+            <tr> 
+                <td>{{ unit.nom|upper }}</td>
+                <td>{{ unit.date|date('d-m-Y') }}</td>
+                <td>{{ unit.type}}</td>
+                <td>{{ unit.description }}</td>
+                <td><a href="{{ path('edit-activite',{'id':unit.id}) }}"><strong>Edit</strong></a>&nbsp;&nbsp;<a href="{{ path('delete-activite', {'id':unit.id}) }}"><strong>Delete</strong></a>
+                &nbsp;&nbsp;<a href="{{ path('add-activite-au-voyage', {'id':voyage.id}) }}"><strong>Add</strong></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+#}
+
+
+{% extends 'admin/FormOne.html.twig' %}
+{% block pagecontent %}
+ <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Details du voyage</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <section class="content invoice">
+                      <!-- title row -->
+                        <div class="row">
+                            <!-- Invoice Header -->
+                            <div class="col-md-6 col-md-offset-6 invoice-header">
+                                <h1>
+                                    <i class="fa fa-newspaper-o"></i> {{ voyage.nom|upper }}
+                                </h1>
+                            </div>
+                            <!-- /Invoice Header -->
+                        </div>
+                        <br>
+                        
+                        <!-- Description Box -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="lead">Description</p>
+                            </div>
+                             <div class="col-md-6">
+                                <p class="lead">Informations</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                            
+                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            {{ voyage.getDescription() }}
+                            </p>
+                            </div>
+                        
+                            <div class="col-md-6 invoice-col">
+                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            <b>Identifiant #{{voyage.id}}</b>
+                            <br>
+                            <b>Type: </b> {{voyage.type}}
+                            <br>
+                            <b>Destination: </b> {{voyage.destination}}
+                            <br>
+                            <b>Date de départ: </b> {{ voyage.getDateDebut()|date('d-m-Y') }}
+                            <br>
+                            <b>Date de retour: </b> {{voyage.getDateFin()|date('d-m-Y') }}
+                            <br>
+                            <b>Prix: </b> {{voyage.prix}} DT
+                            
+                            </p>
+                            </div>
+                        </div>
+                        <!-- /Description Box -->
+                        
+
+        {# -------------------activities---------------#}
+                             
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Les activités</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <ul class="list-unstyled timeline">
+                    {#----------One element of the timeline----------#}
+                    {% for unit in voyage.activites %}
+                        <li>
+                      <div class="block">
+                        <div class="tags">
+                          <a class="tag">
+                            <span>{{unit.getDate()|date('d-m-Y')}}</span>
+                          </a>
+                        </div>
+                        <div class="block_content">
+                          <h2 class="title">
+                                          <a>{{unit.nom}}</a>
+                                      </h2>
+                          <div class="byline">
+                            <span>{{unit.type}}</span>
+                          </div>
+                          <p class="excerpt">{{unit.getDescription()}}
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    {% endfor %}
+                    
+                    {#----------One element of the timeline----------#}
+                  </ul>
+                </div>
+                 <a href="{{ path('add-activite-au-voyage',{'id':voyage.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Add </a>
+              </div>
+        {# -------------------activities---------------#}
+
+        {# -------Gallery-------------------------#}
+
+        <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Media Gallery <small> gallery design </small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <div class="row">
+                    {#----------one image---------#}
+                      <div class="col-sm-4 invoice-col">
+                          <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="{{ asset('images/' ~ voyage.image1) }}" alt="image" />
+                          </div>
+                      </div>
+                      {#----------one image---------#}
+                       {#----------one image---------#}
+                       <div class="col-sm-4 invoice-col">
+                          <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="{{ asset('images/' ~ voyage.image1) }}" alt="image" />
+                          </div>
+                      </div>
+                      {#----------one image---------#}
+                        {#----------one image---------#}
+                      <div class="col-sm-4 invoice-col">
+                          <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="{{ asset('images/' ~ voyage.image1) }}" alt="image" />
+                          </div>
+                      </div>
+                      {#----------one image---------#}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {#---------/Gallery--------------------------#}          
+    
+                      <!-- this row will not appear when printing -->
+                      <div class="row no-print">
+                        <div class="col-md-2">
+                          <a href="{{ path('generate-pdf-voyage',{'id':voyage.id}) }}" class="btn btn-primary btn-xs"><i class=" fa fa-file-pdf-o"></i> PDF </a>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+{% endblock %}
+
+
+

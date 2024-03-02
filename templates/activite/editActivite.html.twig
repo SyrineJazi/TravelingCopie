@@ -1,0 +1,143 @@
+{#
+% include 'reusable/formCSS.html.twig' %}
+{% include 'reusable/headerButtons.html.twig' %}
+
+<br>
+<br>
+<br>
+
+{{ form_start(activite_form) }}
+<div class="form-container">
+    <div class="form-group">
+        {{ form_label(activite_form.identifiant, "Identifiant") }}
+        {{ form_widget(activite_form.identifiant) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(activite_form.nom, "Nom") }}
+        {{ form_widget(activite_form.nom) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(activite_form.date, "Date") }}
+        {{ form_widget(activite_form.date) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(activite_form.type, "Type") }}
+        {{ form_widget(activite_form.type) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(activite_form.description, "Description") }}
+        {{ form_widget(activite_form.description) }}
+    </div>
+    <div class="form-group">
+        <button type="submit" class="centered-button">Edit</button>
+    </div>
+</div>
+{{ form_end(activite_form) }}
+#}
+
+{% extends "admin/FormOne.html.twig" %}
+
+{% block pagecontent %}
+
+<!-- jQuery UI CSS CDN -->
+<link href=
+'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' 
+         rel='stylesheet'>
+
+<!-- jQuery UI JS CDN -->
+<script src=
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
+</script>
+
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.js"></script>
+
+
+<div class="right_col" role="main">
+{#<div class="col-md-6 ">#}
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Formulaire Activité<small>Ajouter une activité</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <br />
+            {{ form_start(activite_form, {'attr': {'novalidate': 'novalidate'}} ) }}
+            <form class="form-horizontal form-label-left">
+                {#--------Labels input------------#}
+                <div class="form-group row ">
+                    {{ form_label(activite_form.nom, "Nom", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(activite_form.nom, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+
+                                <div id="error-nom" style="color:red;">
+                                    {{ form_errors(activite_form.nom) }}
+                                </div>   
+                        </div>
+                </div>
+                <div class="form-group row">
+                        {{ form_label(activite_form.date, "Date", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(activite_form.date, {'attr': {'class': 'date-picker form-control', 'placeholder':'jj/mm/aaaa','onfocus': 'this.type=\'date\'', 'onmouseover': 'this.type=\'date\'', 'onclick': 'this.type=\'date\'', 'onblur': 'this.type=\'text\'', 'onmouseout': 'timeFunctionLong(this)'}}) }}
+                                <div id="error-nom" style="color:red;">
+                                    {{ form_errors(activite_form.date) }}
+                                </div>   
+                        </div>
+                </div>
+                <script>
+                    function timeFunctionLong(input) {
+                        setTimeout(function() {
+                            input.type = 'text';
+                        }, 60000);
+                    }
+                </script>
+                <div class="form-group row">
+                    {{ form_label(activite_form.type, "Type", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                            <div class="col-md-9 col-sm-9">
+                                {% for unit in activite_form.type %}
+                                    <div class="radio">
+                                        <label>
+                                            {{ form_widget(unit, {'attr': {'class': 'flat'}}) }} {{ unit.vars.label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                                <div id="error-nom" style="color:red;">
+                                    {{ form_errors(activite_form.type) }}
+                                </div>   
+                            </div>
+                </div>
+            
+               <div class="form-group row">
+                    <label for="{{ activite_form.description.vars.id }}" class="control-label col-md-3 col-sm-3">Description</label>
+                    <div class="col-md-9 col-sm-9">
+                        {{ form_widget(activite_form.description, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                    </div>
+                </div>
+                <script>
+                    const quill = new Quill('#{{ activite_form.description.vars.id }}', {
+                        theme: 'snow'
+                    });
+                </script>
+                {#-------- Fin - Label input------------#}
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9  offset-md-3">
+                        <button type="submit" class="btn btn-success">Edit</button>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                    </div>
+                </div>
+                {{ form_rest(activite_form) }}
+                {{ form_end(activite_form) }}
+            </form>
+            
+        </div>
+    </div>
+{#</div>#}
+</div>
+
+{% endblock %}
+
