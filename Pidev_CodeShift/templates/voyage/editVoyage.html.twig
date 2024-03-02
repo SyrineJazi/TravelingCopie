@@ -1,0 +1,129 @@
+{% extends "admin/FormOne.html.twig" %}
+{% block pagecontent %}
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.js"></script>
+<div class="right_col" role="main">
+{#<div class="col-md-6 ">#}
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Formulaire Voyage<small>Ajouter un voyage</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <br />
+            {{ form_start(voyage_form, {'attr': {'novalidate': 'novalidate'}} ) }}
+            <form class="form-horizontal form-label-left">
+                {#--------Labels input------------#}
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.nom, "Nom", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.nom, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                            
+                                <div id="error-nom" style="color:red;">
+                                    {{ form_errors(voyage_form.nom) }}
+                                </div>     
+                                
+                        </div>
+                </div>
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.prix, "Prix", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.prix, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                                <div id="error-nom" style="color:red;">
+                                    {{ form_errors(voyage_form.prix) }}
+                                </div>     
+                        </div>
+                </div>
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.destination, "Destination", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.destination, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                                <div id="error-nom" style="color:red;">
+                                    {{ form_errors(voyage_form.destination) }}
+                                </div>     
+                        </div>
+                </div>
+                <div class="form-group row ">
+                    {{ form_label(voyage_form.image1, "Image 1", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.image1, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                                <div id="error-nom" style="color:red;">
+                                    {{ form_errors(voyage_form.image1) }}
+                                </div>     
+                        </div>
+                </div>
+                    {#------------description--------#}
+                <div class="form-group row">
+                    <label for="{{ voyage_form.description.vars.id }}" class="control-label col-md-3 col-sm-3">Description</label>
+                    <div class="col-md-9 col-sm-9">
+                        {{ form_widget(voyage_form.description, {'attr': {'class': 'form-control', 'placeholder' : '...'}}) }}
+                    </div>
+                </div>
+                <script>
+                    const quill = new Quill('#{{ voyage_form.description.vars.id }}', {
+                        theme: 'snow'
+                    });
+                </script>
+                    {#------------End-description--------#}
+
+                    {#------------TYPE--------#}
+                <div class="form-group row">
+                    {{ form_label(voyage_form.type, "Type", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                            <div class="col-md-9 col-sm-9">
+                                {% for unit in voyage_form.type %}
+                                    <div class="radio">
+                                        <label>
+                                            {{ form_widget(unit, {'attr': {'class': 'flat'}}) }} {{ unit.vars.label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                                <div id="error-nom" style="color:red;">
+                                    {{ form_errors(voyage_form.type) }}
+                                </div>   
+                            </div>
+                </div>
+
+                    {#------------END TYPE--------#}
+
+                <div class="form-group row">
+                        {{ form_label(voyage_form.date_debut, "Date Début", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.date_debut, {'attr': {'class': 'date-picker form-control', 'placeholder':'jj/mm/aaaa','onfocus': 'this.type=\'date\'', 'onmouseover': 'this.type=\'date\'', 'onclick': 'this.type=\'date\'', 'onblur': 'this.type=\'text\'', 'onmouseout': 'timeFunctionLong(this)'}}) }}
+                        </div>
+                </div>
+                <div class="form-group row">
+                        {{ form_label(voyage_form.date_fin, "Date Fin", {'label_attr': {'class': 'control-label col-md-3 col-sm-3'}}) }}
+                        <div class="col-md-9 col-sm-9">
+                            {{ form_widget(voyage_form.date_fin, {'attr': {'class': 'date-picker form-control', 'placeholder':'jj/mm/aaaa','onfocus': 'this.type=\'date\'', 'onmouseover': 'this.type=\'date\'', 'onclick': 'this.type=\'date\'', 'onblur': 'this.type=\'text\'', 'onmouseout': 'timeFunctionLong(this)'}}) }}
+                        </div>
+                </div>
+                <script>
+                    function timeFunctionLong(input) {
+                        setTimeout(function() {
+                            input.type = 'text';
+                        }, 60000);
+                    }
+                </script>
+                {#-------- Fin - Label input------------#}
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-3">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                    </div>
+                </div>
+                {{ form_rest(voyage_form) }}
+                {{ form_end(voyage_form) }}
+            </form>
+            
+        </div>
+    </div>
+{#</div>#}
+</div>
+
+{% endblock %}
+
