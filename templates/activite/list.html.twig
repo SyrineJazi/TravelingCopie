@@ -1,0 +1,136 @@
+{#
+{% include 'reusable/listCSS.html.twig' %}
+{% include 'reusable/headerButtons.html.twig' %}
+
+<br>
+<br>
+<br>
+
+{% if activites is not defined or activites is empty %}
+    <h3>Aucune activité repertorié</h3>
+{% else %}
+    <table class="author-table">
+        <tr>
+            <td>Nom</td>
+            <td>Date</td>
+            <td>Type</td>
+            <td>Description</td>
+        </tr>
+        {% for unit in activites %}
+            <tr>
+                {#<td><a href="{{path('author-details', {'name':unit.name}) }}">{{ unit.name|upper }}</a></td>#}
+                {#
+                <td>{{ unit.nom|upper }}</td>
+                <td>{{ unit.date|date('d-m-Y') }}</td>
+{#
+                <td>{{ unit.type}}</td>
+                <td>{{ unit.description }}</td>
+                
+                {#<td><img class="author-image" src="{{ asset('images/' ~ unit.image) }}" alt="Author Portrait" /></td>#}
+{#
+                <td><a href="{{ path('edit-activite',{'id':unit.id}) }}"><strong>Edit</strong></a>&nbsp;&nbsp;<a href="{{ path('delete-activite', {'id':unit.id}) }}"><strong>Delete</strong></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+#}
+
+{% extends "admin/tables.html.twig" %}
+
+{% block pagecontent %}
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Liste des Activités</h3>
+              </div>
+                    <!--partie search-->
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+                   <!--end partie search-->
+
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Activités</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <p>Compilation de toutes les activités entrées dans la base de données</p>
+
+                    <!-- start project list -->
+            
+                        {% if activites is not defined or activites is empty %}
+                            <div style="background-color: #ffcccc; padding: 20px; border-radius: 10px;">
+                            <h3 style="font-weight: bold; color: #7C0A02;">Aucune activité répertoriée !</h3>
+                            </div>
+                        {% else %}
+                            {# Your existing Twig code here #}
+                        
+                    <table class="table table-striped projects">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th style="width: 13%">Nom</th>
+                          <th>Date</th>
+                          <th>Type</th>
+                          <th style="width: 25%">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for unit in activites %}
+                        <tr>
+                          <td>#</td>
+                          <td>{{ unit.nom|upper }}</td>
+                          <td>{{ unit.date|date('d-m-Y') }}</td>
+                          <td>{{ unit.type }}</td>
+                          {#
+                          <td class="project_progress">
+                            <div class="progress progress_sm">
+                              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57"></div>
+                            </div>
+                            <small>57% Complete</small>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-success btn-xs">Success</button>
+                          </td>
+                          #}
+                          <td>
+                            {#<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>#}
+                            <a href="{{ path('edit-activite',{'id':unit.id}) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                            <a href="{{ path('delete-activite',{'id':unit.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                          </td>
+                        </tr>
+                         {% endfor %}
+                      </tbody>
+                    </table>
+                {% endif %}
+                    <!-- end project list -->
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+{% endblock %}

@@ -1,0 +1,101 @@
+<style>
+    .author-image {
+        width: 100px; /* Adjust the width as needed */
+        height: 100px; /* Adjust the height as needed */
+    }
+
+    .author-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 18px; /* Adjust the font size as needed */
+    }
+
+    .author-table th,
+    .author-table td {
+        border: 1px solid #000;
+        text-align: center;
+        padding: 15px; /* Adjust the padding as needed */
+    }
+
+    .author-table th {
+        background-color: #f0f0f0; /* Light gray background for table header */
+    }
+
+    .author-table td:first-child {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .author-description {
+        border: 1px solid #000;
+        padding: 15px; /* Adjust the padding as needed */
+    }
+
+    .activities-header {
+        margin-top: 20px; /* Add spacing above the activities header */
+        font-size: 24px; /* Larger font size for activities header */
+        color: #007bff; /* Blue color for activities header */
+    }
+
+    .no-activities {
+        font-size: 18px; /* Larger font size for message */
+        color: #6c757d; /* Gray color for message */
+    }
+
+    .add-activity-link {
+        color: #28a745; /* Green color for add activity link */
+    }
+
+    .add-activity-link:hover {
+        text-decoration: underline; /* Underline on hover for add activity link */
+    }
+</style>
+
+
+<br><br><br>
+
+<h1 style="text-align: center;">Details du voyage</h1>
+<br><br><br>
+
+
+<table class="author-table">
+    <tr>
+        <th colspan="2">INFORMATION</th>
+    </tr>
+    <tr>
+        <td class="author-description" colspan="2">
+            <p><strong>{{ voyage.nom|upper }}</strong></p>
+            <p>Destination: {{ voyage.destination }}</p>
+            <p>Date de départ: {{ voyage.getDateDebut()|date('d-m-Y') }}</p>
+            <p>Date de fin: {{ voyage.getDateFin()|date('d-m-Y')}}</p>
+    </tr>
+    <tr>
+            <th colspan="2">Description</th>  
+    </tr>
+    <tr>
+    <td><p>{{ voyage.getDescription() }}</p></td>
+    </tr>
+</table>
+
+<h1 class="activities-header">List des activités</h1>
+
+{% if voyage.activites is not defined or voyage.activites is empty %}
+    <h3 class="no-activities">Aucune activité répertoriée</h3>
+{% else %}
+    <table class="author-table">
+        <tr>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+        {% for unit in voyage.activites %}
+            <tr>
+                <td>{{ unit.nom|upper }}</td>
+                <td>{{ unit.date|date('d-m-Y') }}</td>
+                <td>{{ unit.type }}</td>
+                <td>{{ unit.description }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
