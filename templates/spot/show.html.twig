@@ -1,0 +1,16 @@
+{% extends 'admin/media_gallery.html.twig' %}
+
+{% block title %}{{ spot.nom }}{% endblock %}
+
+{% block body %}
+ <h1>{{ spot.nom }}</h1>
+  <p>{{ spot.id }}</p>
+
+ <p>{{ spot.localisation }}</p>
+  <p>{{ spot.description }}</p>
+
+ <hr>
+ <a href="/">Retour</a>
+ 
+
+{% endblock %}

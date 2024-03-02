@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Spots Touristiques{% endblock %}
+
+{% block body %}
+    <h1>Liste des Spots Touristiques</h1>
+
+    <div class="row">
+        {% for spot in spots %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ asset('path/to/spot/image.jpg') }}" class="card-img-top" alt="Spot Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ spot.nom }}</h5>
+                        <p class="card-text">{{ spot.description }}</p>
+<a href="{{ path('spot_detail', {'id': spot.id}) }}" class="btn btn-primary">Détails</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

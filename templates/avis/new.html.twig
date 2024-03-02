@@ -1,0 +1,22 @@
+use Doctrine\ORM\EntityManagerInterface;
+Razan
+Raddadi Razan
+{% extends 'base.html.twig' %}
+
+{% block title %}New avis{% endblock %}
+
+{% block body %}
+    <h1>Créer un nouveau avisentaire </h1>
+ <br>
+    {{ form_start(avis_form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="form-container">
+        <div class="form-group">
+            {{ form_row(avis_form.contenu) }}
+         
+        </div>
+        <button type="submit" class="centered-button">Envoyer le avisentaire</button>
+    </div>
+    {{ form_end(avis_form)}}
+</br>
+    <a href="{{ path('app_avis_index') }}">back to list</a>
+{% endblock %}

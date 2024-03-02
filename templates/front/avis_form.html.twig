@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}ajout avis!{% endblock %}
+{% block body %}
+<h1>ajout avis </h1>
+<br>
+<br>
+<br>
+
+   {{ form_start(comment_form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="form-container">
+        <div class="form-group">
+            {{ form_label(comment_form.avis, "Commentaire") }}
+            {{ form_widget(comment_form.commentaire) }}
+            {% if comment_form.commentaire.vars.errors|length > 0 %}
+                <div class="error">
+                    {% for error in comment_form.commentaire.vars.errors %}
+                        <span>{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="centered-button">Envoyer le commentaire</button>
+    </div>
+    {{ form_end(comment_form) }}
+{% endblock %}

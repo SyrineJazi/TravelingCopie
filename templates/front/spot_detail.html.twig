@@ -1,0 +1,105 @@
+{# templates/front/spot_detail.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Spot{% endblock %}
+
+{% block body %}
+    <h1>Détails du Spot</h1>
+
+    <div class="card">
+							<img src="{{asset('admin/images/Barcelona.jpg')}}" alt="..." class="img-circle profile_img">
+        <div class="card-body">
+            <h5 class="card-title">{{ spot.nom }}</h5>
+            <p class="card-text">{{ spot.description }}</p>
+            <p class="card-text">Localisation: {{ spot.localisation }}</p>
+            <a href="{{ path('spot_list') }}" class="btn btn-primary">Retour à la liste des spots</a>
+        </div>
+    </div>
+  
+
+
+  <div class="mt-4">
+    <h2>Ajouter un avis</h2>
+    <div class="card">
+        <div class="card-body">
+
+            <form id="avisForm">
+                <div class="form-group">
+                    <label for="avis">Votre avis :</label>
+                    <textarea class="form-control" id="avis" name="avis" rows="4" placeholder="Saisissez votre avis ici"></textarea>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="ajouterAvis()">Soumettre</button>
+            </form>
+
+            <div id="avisAffiche"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var nextAvisId = 1;
+
+    function ajouterAvis() {
+        var avisTexte = document.getElementById('avis').value;
+
+        // Créer un objet avis avec un identifiant unique
+        var nouvelAvis = {
+            id: nextAvisId++,
+            texte: avisTexte
+        };
+
+        // Sauvegarder l'avis dans la liste (vous pouvez utiliser une variable, un tableau, etc.)
+        // Dans cet exemple, j'utilise une variable globale pour stocker les avis
+        if (!window.avisListe) {
+            window.avisListe = [];
+        }
+        window.avisListe.push(nouvelAvis);
+
+        // Afficher les avis
+        afficherAvis();
+    }
+
+    function supprimerAvis(id) {
+        // Filtrer la liste des avis pour exclure celui avec l'identifiant fourni
+        window.avisListe = window.avisListe.filter(function (avis) {
+            return avis.id !== id;
+        });
+
+        // Afficher les avis mis à jour
+        afficherAvis();
+    }
+
+    function modifierAvis(id) {
+        // Trouver l'avis avec l'identifiant fourni
+        var avis = window.avisListe.find(function (avis) {
+            return avis.id === id;
+        });
+
+        // Pré-remplir le formulaire avec le texte de l'avis
+        document.getElementById('avis').value = avis.texte;
+    }
+
+    function afficherAvis() {
+        var avisAfficheDiv = document.getElementById('avisAffiche');
+        avisAfficheDiv.innerHTML = '<h3>Avis</h3>';
+
+        // Parcourir la liste des avis et les afficher dans des boîtes individuelles
+        if (window.avisListe) {
+            for (var i = 0; i < window.avisListe.length; i++) {
+                var avis = window.avisListe[i];
+                var avisBox = document.createElement('div');
+                avisBox.className = 'avis-box';
+                avisBox.innerHTML = '<p>' + avis.texte + '</p>' +
+                                    '<button type="button" onclick="modifierAvis(' + avis.id + ')" class="btn btn-warning">Modifier</button>' +
+                                    '<button type="button" onclick="supprimerAvis(' + avis.id + ')" class="btn btn-danger">Supprimer</button>';
+                avisAfficheDiv.appendChild(avisBox);
+            }
+        }
+    }
+</script>
+
+
+
+{% endblock %}
